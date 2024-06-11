@@ -1,0 +1,88 @@
+ 
+ @media screen and (min-width:700px) and (max-width:1450px) {    
+
+   
+
+  
+}
+
+/* //monitor screen */
+@media screen and (min-width:1451px) {
+        
+
+    .tableHeader{
+       font-size: 18px !important;
+    }
+
+    .not th{
+       /* border: 1px solid #ddd; */
+       padding: 10px 8px !important;
+       /* text-align: left; */
+     }
+    
+     .not td {
+       /* border: 1px solid #ddd; */
+       padding: 10px 10px !important;
+       /* text-align: left; */
+     }
+
+     tr th {
+       /* font-weight: 500; */
+       font-size: 16px !important;
+         /* letter-spacing: 0.4px; */
+       /* color: #940e0e !important; */
+     }
+    
+     td{
+       font-size: 16px !important; 
+       /* font-family: inherit; */
+     }
+    
+     
+     
+}  
+
+
+
+
+
+.view:hover {
+background-color: #8d7d70   !important;
+border-radius: 3px; 
+cursor: pointer;   
+
+}
+
+.eyeIcon:hover {
+  /* background-color: rgb(3, 44, 83) !important; */
+  /* font-size:10px; */
+}
+
+/* .editIcon:hover {
+  background-color: rgb(102, 194, 41) !important;
+}
+
+.deleteIcon:hover {
+  background-color: rgb(171, 7, 7)  !important;
+} */
+ 
+
+.mainHeading input[type="text"]::placeholder {
+font-weight: 400;
+/* color: yellow !important; */
+}
+
+.not th {   
+  padding: 10px 6px  10px 8px !important; 
+}
+
+
+.not td {   
+  padding: 10px 6px  10px 8px !important; 
+}
+
+
+
+
+
+

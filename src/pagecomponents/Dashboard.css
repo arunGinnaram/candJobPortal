@@ -1,0 +1,77 @@
+ 
+
+
+/* //laptop screen */
+ @media screen and (min-width:700px) and (max-width:1450px) {
+     
+
+       .cts {
+         width:15% !important;
+       }
+
+       .location {
+         width:24% !important;
+       }
+    }
+
+    /* //monitor screen */
+    @media screen and (min-width:1451px) { 
+
+         .tableHeader{
+            font-size: 18px !important;
+         }
+
+         .dash th{
+            /* border: 1px solid #ddd; */
+            padding: 10px 8px !important;
+            /* text-align: left; */
+          }
+         
+          .dash td {
+            /* border: 1px solid #ddd; */
+            padding: 10px 10px !important;
+            /* text-align: left; */
+          }
+
+          tr th {
+            /* font-weight: 500; */
+            font-size: 16px !important;
+              /* letter-spacing: 0.4px; */
+            /* color: #940e0e !important; */
+          }
+         
+          td{
+            font-size: 16px !important; 
+            /* font-family: inherit; */
+          }
+         
+          
+          
+ } 
+
+ .dash th {   
+  padding: 10px 6px  10px 8px !important; 
+}
+
+.dash td {   
+  padding: 10px 6px  10px 8px !important; 
+}
+ 
+
+ 
+ 
+
+  
+  
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+ 

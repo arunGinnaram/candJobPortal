@@ -1,0 +1,16 @@
+ 
+ 
+@media screen and (min-width:1600px) {
+  .logoInner {      
+    height: 90px ! important;
+     
+  }
+
+  .d1 {
+    height:90px ! important; 
+  }
+ 
+  .headerText {
+    padding: 10px 0% 0% 30px ! important;
+  }
+}

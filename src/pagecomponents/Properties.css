@@ -1,0 +1,119 @@
+ 
+ @media screen and (min-width:700px) and (max-width:1450px) {    
+
+       .cts {
+         width:15%
+       }
+
+       .location {
+         width:24%
+       }
+
+       .actions{
+         width:12%
+       }
+
+       
+    }
+
+    /* //monitor screen */
+    @media screen and (min-width:1451px) {
+             
+
+         .tableHeader{
+            font-size: 18px !important;
+         }
+
+         th{
+            /* border: 1px solid #ddd; */
+            padding: 10px 8px !important;
+            /* text-align: left; */
+          }
+         
+          td {
+            /* border: 1px solid #ddd; */
+            padding: 10px 10px !important;
+            /* text-align: left; */
+          }
+
+          tr th {
+            /* font-weight: 500; */
+            font-size: 16px !important;
+              /* letter-spacing: 0.4px; */
+            /* color: #940e0e !important; */
+          }
+         
+          td{
+            font-size: 16px !important; 
+            /* font-family: inherit; */
+          }
+
+          .addre button {
+            height: 35px;
+           }
+         
+          
+          
+ }  
+
+
+ .propTable tr th{
+  padding: 5px 8px !important;
+ }
+ 
+ 
+ .propTable tr td{
+  padding: 4px 8px !important;
+ }
+ 
+
+
+ .view:hover {
+  background-color: rgb(201, 197, 197) !important; 
+  border-radius: 3px; 
+  cursor: pointer;   
+   
+ }
+ 
+
+ .mainHeading input[type="text"]::placeholder {
+  font-weight: 400;
+  /* color: yellow !important; */
+}
+
+.createPropInput:hover {
+cursor: pointer;
+background-color: rgb(191 1 1) !important; 
+}
+
+
+
+ 
+/* property data validation  */
+.propertyImages input[type="text"]::placeholder{
+  font-weight: 400 !important;
+  text-transform: capitalize;
+  letter-spacing: 0.8px;
+  font-size: 15px !important;
+  padding-left: 2px;
+  
+}
+
+
+ 
+/* property data validation  */
+.address input[type="text"]::placeholder{
+  font-weight: 400 !important;
+  text-transform: capitalize;
+  letter-spacing: 0.8px;
+  
+  
+}
+
+ .addre input {
+  width: 100%;
+ }
+
+
+ 
+ 
