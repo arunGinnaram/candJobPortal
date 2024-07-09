@@ -51,20 +51,26 @@ const CandidateEducationEdit = (props) => {
   const userId = sessionStorage.getItem("userId");
   const roleId = sessionStorage.getItem("roleId");
 
-  const [educationList,setEducationList] = useState([]);
+  const [educationList, setEducationList] = useState([]);
 
-  useEffect(()=>{  
-getEdDet();
-  },[])
+  useEffect(() => {
+    getEdDet();
+  }, []);
 
   const getEdDet = async () => {
     try {
       const getEdDetails = await axiosInstance.post(
-        "http://" + url + ":" + port + "/" + "getcandidateEducationDetails?userId="+userId,       
+        "http://" +
+          url +
+          ":" +
+          port +
+          "/" +
+          "getcandidateEducationDetails?userId=" +
+          userId,
         cfg
       );
-    
-      console.log("da: " + JSON.stringify(getEdDetails));
+
+      console.log("da: " + JSON.stringify(getEdDetails.data.response[0]));
       if (getEdDetails.data.responseCode == "0") {
         Swal.fire({
           position: "top-end",
@@ -79,15 +85,15 @@ getEdDet();
           hideClass: {
             popup: "animate__animated animate__fadeOutUp",
           },
-    
+
           // timer: 5000,
-    
+
           customClass: {
             popup: "custom-swal-popup", // Assign a custom class name
           },
         });
       } else {
-        setEducationList(getEdDetails.data);
+        setEducationList(getEdDetails.data.response);
         // alert(loginUrl.data.userId + "::" + loginUrl.data.roleId);
         // const userId =  "";
         // const roleId = "";
@@ -104,14 +110,14 @@ getEdDet();
         //   hideClass: {
         //     popup: "animate__animated animate__fadeOutUp",
         //   },
-    
+
         //   // timer: 5000,
-    
+
         //   customClass: {
         //     popup: "custom-swal-popup", // Assign a custom class name
         //   },
         // });
-    
+
         // navigate("/UserHome",{userId,roleId});
       }
     } catch (error) {
@@ -144,18 +150,23 @@ getEdDet();
       //   console.error("An unexpected error occurred:", error);
       // }
     }
-  
-   
-  }
-
+  };
 
   const handleCanEduDetDelete = async (canEduId) => {
     try {
       const getEdDetails = await axiosInstance.post(
-        "http://" + url + ":" + port + "/" + "canEduDetDelete?userId="+userId+"&candidateEducationId="+canEduId,       
+        "http://" +
+          url +
+          ":" +
+          port +
+          "/" +
+          "canEduDetDelete?userId=" +
+          userId +
+          "&candidateEducationId=" +
+          canEduId,
         cfg
       );
-    
+
       console.log("da: " + JSON.stringify(getEdDetails));
       if (getEdDetails.data.responseCode == "0") {
         Swal.fire({
@@ -171,9 +182,9 @@ getEdDet();
           hideClass: {
             popup: "animate__animated animate__fadeOutUp",
           },
-    
+
           // timer: 5000,
-    
+
           customClass: {
             popup: "custom-swal-popup", // Assign a custom class name
           },
@@ -196,16 +207,16 @@ getEdDet();
           hideClass: {
             popup: "animate__animated animate__fadeOutUp",
           },
-    
+
           // timer: 5000,
-    
+
           customClass: {
             popup: "custom-swal-popup", // Assign a custom class name
           },
         });
 
         getEdDet();
-    
+
         // navigate("/UserHome",{userId,roleId});
       }
     } catch (error) {
@@ -238,17 +249,14 @@ getEdDet();
       //   console.error("An unexpected error occurred:", error);
       // }
     }
-  }
-
-
+  };
 
   let { state } = useLocation();
 
   // const location = useLocation();
 
   // const { state } = props;
-//  const { name, age } = state;
-
+  //  const { name, age } = state;
 
   // const { userId } = state;
 
@@ -267,17 +275,17 @@ getEdDet();
     description: "",
     userId: userId,
     roleId: roleId,
-    candidateEducationId:"",
+    candidateEducationId: "",
   });
-
 
   // const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   const handleCanGetEduDet = (cEId) => {
-
     console.log("D:: " + JSON.stringify(educationList));
-    const filteredData = educationList.filter(item => item.candidateEducationId===cEId);
-const edListData = filteredData[0];
+    const filteredData = educationList.filter(
+      (item) => item.candidateEducationId === cEId
+    );
+    const edListData = filteredData[0];
     console.log("D:: " + JSON.stringify(filteredData));
     setData({
       school: edListData.school,
@@ -291,13 +299,13 @@ const edListData = filteredData[0];
       skills: edListData.skills,
       description: edListData.description,
       userId: userId,
-      roleId: roleId,      
-      candidateEducationId:edListData.candidateEducationId
-    })
-      $("select[name='startDateMonth']").val(edListData.startDateMonth);
-      $("select[name='startDateYear']").val(edListData.startDateYear);
-      $("select[name='endDateMonth']").val(edListData.endDateMonth);
-      $("select[name='endDateYear']").val(edListData.endDateYear);
+      roleId: roleId,
+      candidateEducationId: edListData.candidateEducationId,
+    });
+    $("select[name='startDateMonth']").val(edListData.startDateMonth);
+    $("select[name='startDateYear']").val(edListData.startDateYear);
+    $("select[name='endDateMonth']").val(edListData.endDateMonth);
+    $("select[name='endDateYear']").val(edListData.endDateYear);
     // setIsPopupOpen(true);
   };
 
@@ -324,7 +332,7 @@ const edListData = filteredData[0];
       return cfg;
     },
     (err) => {
-      console.error("Axios Err" + err);
+      console.error(err);
       return Promise.reject(err);
     }
   );
@@ -513,7 +521,6 @@ const edListData = filteredData[0];
           }}
         >
           <div className="LeftSideDiv" style={{ width: "810px" }}>
-             
             <div
               className="ThirdLeftSideDiv"
               style={{
@@ -545,482 +552,480 @@ const edListData = filteredData[0];
                   }}
                 >
                   <span>Education</span>
-                  <span>
-                    
-                     
-                  </span>
+                  <span></span>
                 </label>
-                    {educationList.map((item,index)=>(
-                          <div
-                          key={index}
-                          style={{
-                            display: "flex",
-                            marginTop:'4px',
-                            flexDirection: "column",
-                            borderBottom: "0.5px solid #dfdcdc",
-                          }}
-                          >
-                          <label
-                            style={{
-                              fontWeight: "600",
-                              color: "--color-text",
-                              lineHeight: "25px",
-                              display:'flex',
-                              justifyContent:'space-between'
-                            }}
-                          > 
-                            {item.school}  
-                            <span>
-                            <span
-                      className="editIconPen"
-                      style={{ borderRadius: "50%", padding: "3px 7px " }}
-                      // onClick={togglePopup}
+                {educationList.map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      marginTop: "4px",
+                      flexDirection: "column",
+                      borderBottom: "0.5px solid #dfdcdc",
+                    }}
+                  >
+                    <label
+                      style={{
+                        fontWeight: "600",
+                        color: "--color-text",
+                        lineHeight: "25px",
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
                     >
-                      
-                        <Popup
-                          // open={isPopupOpen}
-                          // onClose={() => setIsPopupOpen(false)}
-                          onOpen={() => handleCanGetEduDet(item.candidateEducationId)}
-                          trigger={ 
-                            <FontAwesomeIcon
-                            // onClick={() => handleCanGetEduDet(item.candidateEducationId)}
-                              className="editIcon"
-                              style={{}}
-                              icon={faPen}
-                            />
-                          } 
-                          position="center center"
-                          modal
+                      {item.school}
+                      <span>
+                        <span
+                          className="editIconPen"
+                          style={{ borderRadius: "50%", padding: "3px 7px " }}
+                          // onClick={togglePopup}
                         >
-                        {(close) => (
-                          <form onSubmit={validateForm}>
-                            <div
-                              style={{
-                                width: "750px",
-                                height: "500px",
-                                background: "white",
-                                display: "flex",
-                                border: "0.5px solid lightgray",
-                                borderRadius: "5px",
-                                display: "flex",
-                                flexDirection: "column",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  height: "30px",
-                                  display: "flex",
-                                  justifyContent: "space-between",
-                                  flexDirection: "row",
-                                  padding: "10px 20px",
-                                  fontSize: "20px",
-                                  fontWeight: "600",
-                                  borderBottom: "0.5px solid #dfdcdc",
-                                  color: "var(--color-text)",
-                                }}
-                              >
-                                <div>Edit Education</div>
-
-                                <span
-                                  className="editIconPen"
-                                  style={{
-                                    borderRadius: "50%",
-                                    padding: "3px 7px 4px 7px ",
-                                    alignItems: "center",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                  }}
-                                  onClick={close}
-                                >
-                                  <FontAwesomeIcon
-                                    className="editIcon"
-                                    style={{}}
-                                    icon={faXmark}
-                                  />
-                                </span>
-                              </div>
-                              <br></br>
-
-                              <div
-                                style={{
-                                  padding: "10px 20px",
-                                  overflow: "auto",
-                                }}
-                              >
-                                <div className="inputDataDivCJP">
-                                  <label>School</label>
-                                  <input
-                                    required
-                                    type="text"
-                                    name="school"
-                                    id="school"
-                                    value={data.school}
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <br></br>
-
-                                <div className="inputDataDivCJP">
-                                  <label>Degree</label>
-                                  <input
-                                    required
-                                    type="text"
-                                    name="degree"
-                                    id="degree"
-                                    value={data.degree}
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <br></br>
-
-                                <div className="inputDataDivCJP">
-                                  <label>Field of study</label>
-                                  <input
-                                    required
-                                    type="text"
-                                    name="fieldOfStudy"
-                                    id="fieldOfStudy"
-                                    value={data.fieldOfStudy}
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <br></br>
-
+                          <Popup
+                            // open={isPopupOpen}
+                            // onClose={() => setIsPopupOpen(false)}
+                            onOpen={() =>
+                              handleCanGetEduDet(item.candidateEducationId)
+                            }
+                            trigger={
+                              <FontAwesomeIcon
+                                // onClick={() => handleCanGetEduDet(item.candidateEducationId)}
+                                className="editIcon"
+                                style={{}}
+                                icon={faPen}
+                              />
+                            }
+                            position="center center"
+                            modal
+                          >
+                            {(close) => (
+                              <form onSubmit={validateForm}>
                                 <div
-                                  className="inputDataDivCJP"
                                   style={{
+                                    width: "750px",
+                                    height: "500px",
+                                    background: "white",
                                     display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    width: "96%",
-                                    alignItems: "center",
+                                    border: "0.5px solid lightgray",
+                                    borderRadius: "5px",
+                                    display: "flex",
+                                    flexDirection: "column",
                                   }}
                                 >
-                                  <div style={{ width: "50%" }}>
-                                    <label>Start date (Month)</label>
-                                    <select
-                                      required
-                                      type="text"
-                                      name="startDateMonth"
-                                      id="startDateMonth"
-                                      onChange={handleChange}
+                                  <div
+                                    style={{
+                                      height: "30px",
+                                      display: "flex",
+                                      justifyContent: "space-between",
+                                      flexDirection: "row",
+                                      padding: "10px 20px",
+                                      fontSize: "20px",
+                                      fontWeight: "600",
+                                      borderBottom: "0.5px solid #dfdcdc",
+                                      color: "var(--color-text)",
+                                    }}
+                                  >
+                                    <div>Edit Education</div>
+
+                                    <span
+                                      className="editIconPen"
+                                      style={{
+                                        borderRadius: "50%",
+                                        padding: "3px 7px 4px 7px ",
+                                        alignItems: "center",
+                                        display: "flex",
+                                        justifyContent: "center",
+                                      }}
+                                      onClick={close}
                                     >
-                                      {" "}
-                                      <option value="">Month</option>
-                                      <option value="1">January</option>
-                                      <option value="2">February</option>
-                                      <option value="3">March</option>
-                                      <option value="4">April</option>
-                                      <option value="5">May</option>
-                                      <option value="6">June</option>
-                                      <option value="7">July</option>
-                                      <option value="8">August</option>
-                                      <option value="9">September</option>
-                                      <option value="10">October</option>
-                                      <option value="11">November</option>
-                                      <option value="12">December</option>
-                                    </select>
+                                      <FontAwesomeIcon
+                                        className="editIcon"
+                                        style={{}}
+                                        icon={faXmark}
+                                      />
+                                    </span>
+                                  </div>
+                                  <br></br>
+
+                                  <div
+                                    style={{
+                                      padding: "10px 20px",
+                                      overflow: "auto",
+                                    }}
+                                  >
+                                    <div className="inputDataDivCJP">
+                                      <label>School</label>
+                                      <input
+                                        required
+                                        type="text"
+                                        name="school"
+                                        id="school"
+                                        value={data.school}
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <br></br>
+
+                                    <div className="inputDataDivCJP">
+                                      <label>Degree</label>
+                                      <input
+                                        required
+                                        type="text"
+                                        name="degree"
+                                        id="degree"
+                                        value={data.degree}
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <br></br>
+
+                                    <div className="inputDataDivCJP">
+                                      <label>Field of study</label>
+                                      <input
+                                        required
+                                        type="text"
+                                        name="fieldOfStudy"
+                                        id="fieldOfStudy"
+                                        value={data.fieldOfStudy}
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <br></br>
+
+                                    <div
+                                      className="inputDataDivCJP"
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        width: "96%",
+                                        alignItems: "center",
+                                      }}
+                                    >
+                                      <div style={{ width: "50%" }}>
+                                        <label>Start date (Month)</label>
+                                        <select
+                                          required
+                                          type="text"
+                                          name="startDateMonth"
+                                          id="startDateMonth"
+                                          onChange={handleChange}
+                                        >
+                                          {" "}
+                                          <option value="">Month</option>
+                                          <option value="1">January</option>
+                                          <option value="2">February</option>
+                                          <option value="3">March</option>
+                                          <option value="4">April</option>
+                                          <option value="5">May</option>
+                                          <option value="6">June</option>
+                                          <option value="7">July</option>
+                                          <option value="8">August</option>
+                                          <option value="9">September</option>
+                                          <option value="10">October</option>
+                                          <option value="11">November</option>
+                                          <option value="12">December</option>
+                                        </select>
+                                      </div>
+
+                                      <div style={{ width: "50%" }}>
+                                        <label>Start date (Year)</label>
+                                        <select
+                                          required
+                                          type="text"
+                                          name="startDateYear"
+                                          id="startDateYear"
+                                          style={{}}
+                                          onChange={handleChange}
+                                        >
+                                          <option value="">Year</option>
+                                          <option value="2024">2024</option>
+                                          <option value="2023">2023</option>
+                                          <option value="2022">2022</option>
+                                          <option value="2021">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                          <option value="1990">1990</option>
+                                          <option value="1989">1989</option>
+                                          <option value="1988">1988</option>
+                                          <option value="1987">1987</option>
+                                          <option value="1986">1986</option>
+                                          <option value="1985">1985</option>
+                                          <option value="1984">1984</option>
+                                          <option value="1983">1983</option>
+                                          <option value="1982">1982</option>
+                                          <option value="1981">1981</option>
+                                          <option value="1980">1980</option>
+                                          <option value="1979">1979</option>
+                                          <option value="1978">1978</option>
+                                          <option value="1977">1977</option>
+                                          <option value="1976">1976</option>
+                                          <option value="1975">1975</option>
+                                          <option value="1974">1974</option>
+                                          <option value="1973">1973</option>
+                                          <option value="1972">1972</option>
+                                          <option value="1971">1971</option>
+                                          <option value="1970">1970</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <br></br>
+
+                                    <div
+                                      className="inputDataDivCJP"
+                                      style={{
+                                        display: "flex",
+                                        flexDirection: "row",
+                                        justifyContent: "space-between",
+                                        width: "96%",
+                                      }}
+                                    >
+                                      <div style={{ width: "50%" }}>
+                                        <label>End date (Month)</label>
+                                        <select
+                                          required
+                                          type="text"
+                                          name="endDateMonth"
+                                          id="endDateMonth"
+                                          onChange={handleChange}
+                                        >
+                                          <option value="">Month</option>
+                                          <option value="1">January</option>
+                                          <option value="2">February</option>
+                                          <option value="3">March</option>
+                                          <option value="4">April</option>
+                                          <option value="5">May</option>
+                                          <option value="6">June</option>
+                                          <option value="7">July</option>
+                                          <option value="8">August</option>
+                                          <option value="9">September</option>
+                                          <option value="10">October</option>
+                                          <option value="11">November</option>
+                                          <option value="12">December</option>
+                                        </select>
+                                      </div>
+
+                                      <div style={{ width: "50%" }}>
+                                        <label>End date (Year)</label>
+                                        <select
+                                          required
+                                          type="text"
+                                          name="endDateYear"
+                                          id="endDateYear"
+                                          style={{}}
+                                          onChange={handleChange}
+                                        >
+                                          <option value="">Year</option>
+                                          <option value="2024">2024</option>
+                                          <option value="2023">2023</option>
+                                          <option value="2022">2022</option>
+                                          <option value="2021">2021</option>
+                                          <option value="2020">2020</option>
+                                          <option value="2019">2019</option>
+                                          <option value="2018">2018</option>
+                                          <option value="2017">2017</option>
+                                          <option value="2016">2016</option>
+                                          <option value="2015">2015</option>
+                                          <option value="2014">2014</option>
+                                          <option value="2013">2013</option>
+                                          <option value="2012">2012</option>
+                                          <option value="2011">2011</option>
+                                          <option value="2010">2010</option>
+                                          <option value="2009">2009</option>
+                                          <option value="2008">2008</option>
+                                          <option value="2007">2007</option>
+                                          <option value="2006">2006</option>
+                                          <option value="2005">2005</option>
+                                          <option value="2004">2004</option>
+                                          <option value="2003">2003</option>
+                                          <option value="2002">2002</option>
+                                          <option value="2001">2001</option>
+                                          <option value="2000">2000</option>
+                                          <option value="1999">1999</option>
+                                          <option value="1998">1998</option>
+                                          <option value="1997">1997</option>
+                                          <option value="1996">1996</option>
+                                          <option value="1995">1995</option>
+                                          <option value="1994">1994</option>
+                                          <option value="1993">1993</option>
+                                          <option value="1992">1992</option>
+                                          <option value="1991">1991</option>
+                                          <option value="1990">1990</option>
+                                          <option value="1989">1989</option>
+                                          <option value="1988">1988</option>
+                                          <option value="1987">1987</option>
+                                          <option value="1986">1986</option>
+                                          <option value="1985">1985</option>
+                                          <option value="1984">1984</option>
+                                          <option value="1983">1983</option>
+                                          <option value="1982">1982</option>
+                                          <option value="1981">1981</option>
+                                          <option value="1980">1980</option>
+                                          <option value="1979">1979</option>
+                                          <option value="1978">1978</option>
+                                          <option value="1977">1977</option>
+                                          <option value="1976">1976</option>
+                                          <option value="1975">1975</option>
+                                          <option value="1974">1974</option>
+                                          <option value="1973">1973</option>
+                                          <option value="1972">1972</option>
+                                          <option value="1971">1971</option>
+                                          <option value="1970">1970</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <br></br>
+
+                                    <div className="inputDataDivCJP">
+                                      <label>Grade/Percentage</label>
+                                      <input
+                                        required
+                                        type="text"
+                                        value={data.gradePercentage}
+                                        name="gradePercentage"
+                                        id="gradePercentage"
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <br></br>
+
+                                    <div className="inputDataDivCJP">
+                                      <label>Skills</label>
+                                      <input
+                                        required
+                                        type="text"
+                                        value={data.skills}
+                                        name="skills"
+                                        id="skills"
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <br></br>
+
+                                    <div className="inputDataDivCJP">
+                                      <label>Description</label>
+                                      <textarea
+                                        required
+                                        rows="5"
+                                        type="text"
+                                        value={data.description}
+                                        name="description"
+                                        id="description"
+                                        onChange={handleChange}
+                                      />
+                                    </div>
+                                    <br></br>
                                   </div>
 
-                                  <div style={{ width: "50%" }}>
-                                    <label>Start date (Year)</label>
-                                    <select
-                                      required
-                                      type="text"
-                                      name="startDateYear"
-                                      id="startDateYear"
-                                      style={{}}
-                                      onChange={handleChange}
-                                    >
-                                      <option value="">Year</option>
-                                      <option value="2024">2024</option>
-                                      <option value="2023">2023</option>
-                                      <option value="2022">2022</option>
-                                      <option value="2021">2021</option>
-                                      <option value="2020">2020</option>
-                                      <option value="2019">2019</option>
-                                      <option value="2018">2018</option>
-                                      <option value="2017">2017</option>
-                                      <option value="2016">2016</option>
-                                      <option value="2015">2015</option>
-                                      <option value="2014">2014</option>
-                                      <option value="2013">2013</option>
-                                      <option value="2012">2012</option>
-                                      <option value="2011">2011</option>
-                                      <option value="2010">2010</option>
-                                      <option value="2009">2009</option>
-                                      <option value="2008">2008</option>
-                                      <option value="2007">2007</option>
-                                      <option value="2006">2006</option>
-                                      <option value="2005">2005</option>
-                                      <option value="2004">2004</option>
-                                      <option value="2003">2003</option>
-                                      <option value="2002">2002</option>
-                                      <option value="2001">2001</option>
-                                      <option value="2000">2000</option>
-                                      <option value="1999">1999</option>
-                                      <option value="1998">1998</option>
-                                      <option value="1997">1997</option>
-                                      <option value="1996">1996</option>
-                                      <option value="1995">1995</option>
-                                      <option value="1994">1994</option>
-                                      <option value="1993">1993</option>
-                                      <option value="1992">1992</option>
-                                      <option value="1991">1991</option>
-                                      <option value="1990">1990</option>
-                                      <option value="1989">1989</option>
-                                      <option value="1988">1988</option>
-                                      <option value="1987">1987</option>
-                                      <option value="1986">1986</option>
-                                      <option value="1985">1985</option>
-                                      <option value="1984">1984</option>
-                                      <option value="1983">1983</option>
-                                      <option value="1982">1982</option>
-                                      <option value="1981">1981</option>
-                                      <option value="1980">1980</option>
-                                      <option value="1979">1979</option>
-                                      <option value="1978">1978</option>
-                                      <option value="1977">1977</option>
-                                      <option value="1976">1976</option>
-                                      <option value="1975">1975</option>
-                                      <option value="1974">1974</option>
-                                      <option value="1973">1973</option>
-                                      <option value="1972">1972</option>
-                                      <option value="1971">1971</option>
-                                      <option value="1970">1970</option>
-                                    </select>
+                                  <div
+                                    style={{
+                                      height: "28px",
+                                      display: "flex",
+                                      justifyContent: "flex-end",
+                                      flexDirection: "row",
+                                      padding: "10px 20px",
+                                      border: "0.5px solid #dfdcdc",
+                                      // color: "var(--color-text)",
+                                    }}
+                                  >
+                                    <button type="submit" className="saveBtn">
+                                      Update
+                                    </button>
                                   </div>
                                 </div>
-                                <br></br>
-
-                                <div
-                                  className="inputDataDivCJP"
-                                  style={{
-                                    display: "flex",
-                                    flexDirection: "row",
-                                    justifyContent: "space-between",
-                                    width: "96%",
-                                  }}
-                                >
-                                  <div style={{ width: "50%" }}>
-                                    <label>End date (Month)</label>
-                                    <select
-                                      required
-                                      type="text"
-                                      name="endDateMonth"
-                                      id="endDateMonth"
-                                      onChange={handleChange}
-                                    >
-                                      <option value="">Month</option>
-                                      <option value="1">January</option>
-                                      <option value="2">February</option>
-                                      <option value="3">March</option>
-                                      <option value="4">April</option>
-                                      <option value="5">May</option>
-                                      <option value="6">June</option>
-                                      <option value="7">July</option>
-                                      <option value="8">August</option>
-                                      <option value="9">September</option>
-                                      <option value="10">October</option>
-                                      <option value="11">November</option>
-                                      <option value="12">December</option>
-                                    </select>
-                                  </div>
-
-                                  <div style={{ width: "50%" }}>
-                                    <label>End date (Year)</label>
-                                    <select
-                                      required
-                                      type="text"
-                                      name="endDateYear"
-                                      id="endDateYear"
-                                      style={{}}
-                                      onChange={handleChange}
-                                    >
-                                      <option value="">Year</option>
-                                      <option value="2024">2024</option>
-                                      <option value="2023">2023</option>
-                                      <option value="2022">2022</option>
-                                      <option value="2021">2021</option>
-                                      <option value="2020">2020</option>
-                                      <option value="2019">2019</option>
-                                      <option value="2018">2018</option>
-                                      <option value="2017">2017</option>
-                                      <option value="2016">2016</option>
-                                      <option value="2015">2015</option>
-                                      <option value="2014">2014</option>
-                                      <option value="2013">2013</option>
-                                      <option value="2012">2012</option>
-                                      <option value="2011">2011</option>
-                                      <option value="2010">2010</option>
-                                      <option value="2009">2009</option>
-                                      <option value="2008">2008</option>
-                                      <option value="2007">2007</option>
-                                      <option value="2006">2006</option>
-                                      <option value="2005">2005</option>
-                                      <option value="2004">2004</option>
-                                      <option value="2003">2003</option>
-                                      <option value="2002">2002</option>
-                                      <option value="2001">2001</option>
-                                      <option value="2000">2000</option>
-                                      <option value="1999">1999</option>
-                                      <option value="1998">1998</option>
-                                      <option value="1997">1997</option>
-                                      <option value="1996">1996</option>
-                                      <option value="1995">1995</option>
-                                      <option value="1994">1994</option>
-                                      <option value="1993">1993</option>
-                                      <option value="1992">1992</option>
-                                      <option value="1991">1991</option>
-                                      <option value="1990">1990</option>
-                                      <option value="1989">1989</option>
-                                      <option value="1988">1988</option>
-                                      <option value="1987">1987</option>
-                                      <option value="1986">1986</option>
-                                      <option value="1985">1985</option>
-                                      <option value="1984">1984</option>
-                                      <option value="1983">1983</option>
-                                      <option value="1982">1982</option>
-                                      <option value="1981">1981</option>
-                                      <option value="1980">1980</option>
-                                      <option value="1979">1979</option>
-                                      <option value="1978">1978</option>
-                                      <option value="1977">1977</option>
-                                      <option value="1976">1976</option>
-                                      <option value="1975">1975</option>
-                                      <option value="1974">1974</option>
-                                      <option value="1973">1973</option>
-                                      <option value="1972">1972</option>
-                                      <option value="1971">1971</option>
-                                      <option value="1970">1970</option>
-                                    </select>
-                                  </div>
-                                </div>
-                                <br></br>
-
-                                <div className="inputDataDivCJP">
-                                  <label>Grade/Percentage</label>
-                                  <input
-                                    required
-                                    type="text"
-                                    value={data.gradePercentage}
-                                    name="gradePercentage"
-                                    id="gradePercentage"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <br></br>
-
-                                <div className="inputDataDivCJP">
-                                  <label>Skills</label>
-                                  <input
-                                    required
-                                    type="text"
-                                    value={data.skills}
-                                    name="skills"
-                                    id="skills"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <br></br>
-
-                                <div className="inputDataDivCJP">
-                                  <label>Description</label>
-                                  <textarea
-                                    required
-                                    rows="5"
-                                    type="text"
-                                    value={data.description}
-                                    name="description"
-                                    id="description"
-                                    onChange={handleChange}
-                                  />
-                                </div>
-                                <br></br>
-                              </div>
-
-                              <div
-                                style={{
-                                  height: "28px",
-                                  display: "flex",
-                                  justifyContent: "flex-end",
-                                  flexDirection: "row",
-                                  padding: "10px 20px",
-                                  border: "0.5px solid #dfdcdc",
-                                  // color: "var(--color-text)",
-                                }}
-                              >
-                                <button type="submit" className="saveBtn">
-                                  Update
-                                </button>
-                              </div>
-                            </div>
-                          </form>
-                        )}
-                      </Popup>
-                                
-                    </span> 
-
-                    &nbsp;
-                    <span
-                      className="editIconPen"
-                      style={{ borderRadius: "50%", padding: "3px 7px " }}
-                      // onClick={togglePopup}
+                              </form>
+                            )}
+                          </Popup>
+                        </span>
+                        &nbsp;
+                        <span
+                          className="editIconPen"
+                          style={{ borderRadius: "50%", padding: "3px 7px " }}
+                          // onClick={togglePopup}
+                        >
+                          <FontAwesomeIcon
+                            onClick={() =>
+                              handleCanEduDetDelete(item.candidateEducationId)
+                            }
+                            className="editIcon"
+                            style={{}}
+                            icon={faTrash}
+                          />
+                        </span>
+                      </span>
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
                     >
+                      {item.fieldOfStudy}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.startDateMonth}/{item.startDateYear} -{" "}
+                      {item.endDateMonth}/{item.endDateYear}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.gradePercentage}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.skills}
+                    </label>
+                    <br />
+                  </div>
+                ))}
 
-                      <FontAwesomeIcon
-                            onClick={() => handleCanEduDetDelete(item.candidateEducationId)}
-                              className="editIcon"
-                              style={{}}
-                              icon={faTrash}
-                            /></span></span>
-                    
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                            {item.fieldOfStudy}  
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                             {item.startDateMonth}/{item.startDateYear } - {item.endDateMonth}/{item.endDateYear }   
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                             {item.gradePercentage}
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                             {item.skills}
-                          </label>
-                          <br />
-                          </div>
-                                ))}
-               
- 
                 <br />
               </div>
             </div>

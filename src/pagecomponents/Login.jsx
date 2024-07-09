@@ -35,7 +35,7 @@ const Login = (props) => {
       return cfg;
     },
     (err) => {
-      console.error("Axios Err" + err);
+      console.error(err);
       return Promise.reject(err);
     }
   );
@@ -114,12 +114,12 @@ const Login = (props) => {
           });
         } else {
           // alert(loginUrl.data.userId + "::" + loginUrl.data.roleId);
-          const userId =  loginUrl.data.userId;
+          const userId = loginUrl.data.userId;
           const roleId = loginUrl.data.roleId;
           const userName = loginUrl.data.roleId;
           const lastName = loginUrl.data.lastName;
           const firstName = loginUrl.data.firstName;
-           const profileImage = loginUrl.data.userProfileImage;
+          const profileImage = loginUrl.data.userProfileImage;
           Swal.fire({
             position: "top-end",
             width: "auto",
@@ -141,43 +141,56 @@ const Login = (props) => {
             },
           });
           console.log(JSON.stringify(loginUrl));
-           sessionStorage.setItem("userId",userId);
-           sessionStorage.setItem("firstName",firstName);
-           sessionStorage.setItem("lastName",lastName);
-           sessionStorage.setItem("roleId",roleId);
-           sessionStorage.setItem("profileImage",profileImage);
+          sessionStorage.setItem("userId", userId);
+          sessionStorage.setItem("firstName", firstName);
+          sessionStorage.setItem("lastName", lastName);
+          sessionStorage.setItem("roleId", roleId);
+          sessionStorage.setItem("profileImage", profileImage);
           //  sessionStorage.setItem("userId",userId);
-          navigate("/UserMainPage",{ state:  userId  });
+          navigate("/UserMainPage", { state: userId });
         }
       } catch (error) {
-        console.log("error : " + error);
-        // if (error.response && error.response.data) {
-        // const errorMap = error.response.data;
-        // const errorMessage = Object.keys(errorMap)
-        //   .map(field => `${errorMap[field]}<br>`)
-        //   .join('');
-        Swal.fire({
-          position: "top-end",
-          width: "auto",
-          showConfirmButton: false,
-          background: "rgb(153, 12, 25)",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${error}</p>`,
-          showClass: {
-            popup: "animate__animated animate__fadeInLeft",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-          // timer: 5000,
-          customClass: {
-            popup: "custom-swal-popup", // Assign a custom class name
-          },
-        });
-        // } else {
-        //   // Handle other types of errors (network error, etc.)
-        //   // You can display a generic error message or handle it differently
-        //   console.error("An unexpected error occurred:", error);
-        // }
+        if(error=="AxiosError: Network Error"){
+          Swal.fire({
+            position: "top-end",
+            width: "auto",
+            showConfirmButton: false,
+            background: "rgb(153, 12, 25)",
+            html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Network error</p>`,
+            showClass: {
+              popup: "animate__animated animate__fadeInLeft",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+            // timer: 5000,
+            customClass: {
+              popup: "custom-swal-popup", // Assign a custom class name
+            },
+          });
+        }else {
+          Swal.fire({
+            position: "top-end",
+            width: "auto",
+            showConfirmButton: false,
+            background: "rgb(153, 12, 25)",
+            html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${error}</p>`,
+            showClass: {
+              popup: "animate__animated animate__fadeInLeft",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+            // timer: 5000,
+            customClass: {
+              popup: "custom-swal-popup", // Assign a custom class name
+            },
+          });
+        }
+         
+       
+       
+        
       }
     }
   };
@@ -210,7 +223,8 @@ const Login = (props) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center", background:'rgb(207 206 207)',
+          alignItems: "center",
+          background: "rgb(207 206 207)",
           // background:'var(--color-component-background)',
         }}
       >
@@ -233,7 +247,6 @@ const Login = (props) => {
               fontWeight: "600",
               display: "flex",
               marginBottom: "5px",
-             
             }}
           >
             {1 == 1 ? (

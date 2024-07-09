@@ -704,3 +704,9 @@ background-color: white;
    cursor: pointer;
    background: rgb(3, 44, 83) !important;
  }
+
+ .joinRequest:hover {
+   background: rgb(0 117 209) !important;
+   /* opacity: 1.2; */
+
+ }

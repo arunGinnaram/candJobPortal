@@ -1,87 +1,211 @@
 import React, { useEffect, useState } from "react";
 import "./Login.css";
 import "./applicationWhole.css";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import axios from "axios";
+import urlGlobal from "./application.json";
+
+import Swal from "sweetalert2";
+import { useLocation, useNavigate } from "react-router-dom";
+import Header from "./Header";
 import Popup from "reactjs-popup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faXmark,
   faImage,
   faComments,
 } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
-import urlGlobal from "./application.json";
-
-import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
-import Header from "./Header";
-import fileDetails from "./editProp.json";
-
 // import React from 'react';
 import "@react-pdf-viewer/core/lib/styles/index.css";
 import "@react-pdf-viewer/default-layout/lib/styles/index.css";
 // import '@react-pdf-viewer/core/lib/styles/index.css';
 import ProHd from "../assets/images/ProHd.jpg";
-import Defaultprofile from "../assets/images/Defaultprofile.jpg";
 // import mainlogo from '../assets/images/mainlogo.png';
-
-const UserMainPage = (props) => {
+import Defaultprofile from "../assets/images/Defaultprofile.jpg";
+ 
+const UserProfiles = () => {
   const navigate = useNavigate();
   const url = urlGlobal.urlGlobal;
   const port = urlGlobal.port;
-  const contextPath = urlGlobal.ContextPath;
-  const token = sessionStorage.getItem("token");
-  const fileData = fileDetails.response;
 
   const userId = sessionStorage.getItem("userId");
-  const roleId = sessionStorage.getItem("roleId");
+  const roleId = sessionStorage.getItem("roleId"); 
   const firstName = sessionStorage.getItem("firstName");
   const lastName = sessionStorage.getItem("lastName");
   const profileImage = sessionStorage.getItem("profileImage");
 
-  const [postsList, setPostsList] = useState([]);
+  const [educationList, setEducationList] = useState([]);
+
+  let location = useLocation();
 
   useEffect(() => {
-    getEdDet();
-  }, []);
+    if (location.state && location.state.skillName) {
+      handleSearch(location.state.skillName);
+      getEdDet(location.state.skillName);
+    }
+  }, [location.state]); 
 
-  const getEdDet = async () => {
+  const axiosInstance = axios.create();
+  const cfg = {
+    headers: {
+      //  Authorization:`Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  };
+
+  const cfgComments = {
+    headers: {
+      //  Authorization:`Bearer ${token}`,
+      "Content-Type": "application/json",
+      // Accept: "application/json",
+    },
+  };
+
+  axiosInstance.interceptors.response.use(
+    (cfg) => {
+      return cfg;
+    },
+    (err) => {
+      console.error(err);
+      return Promise.reject(err);
+    }
+  );
+
+  const [userBasicDetails, setUserBasicDetails] = useState([]);
+
+  const handleSearch = async (skillName) => {
+    // if(e.key=="Enter"){
+    //   let skill = e.target.value;
+    //   let skillName = skill?skill.toLowerCase().trim():''; 
     try {
       const getEdDetails = await axiosInstance.post(
-        "http://" + url + ":" + port + "/" + "getPostsSaved",
+        "http://" +
+          url +
+          ":" +
+          port +
+          "/" +
+          "getcandidateEducationDetailsBySkills",{
+            skill:skillName},
         cfg
       );
-
-      console.log("da: " + JSON.stringify(getEdDetails));
-      if (getEdDetails.data.responseCode == "0") {
+      console.log("skill: " + JSON.stringify(getEdDetails));
+      if (getEdDetails == null) {
         Swal.fire({
           position: "top-end",
           width: "auto",
           // padding: '0',
           showConfirmButton: false,
-          background: "rgb(153, 12, 25)",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${getEdDetails.data.responseStatus}</p>`,
+          background: "#D0342C",
+          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Retrieved data is empty or  null</p>`,
           showClass: {
             popup: "animate__animated animate__fadeInLeft",
           },
           hideClass: {
             popup: "animate__animated animate__fadeOutUp",
           },
-
-          // timer: 5000,
-
+          timer: 5000,
           customClass: {
             popup: "custom-swal-popup", // Assign a custom class name
           },
         });
       } else {
-        if (getEdDetails.data) {
-          setPostsList(getEdDetails.data.response);
+        if (!getEdDetails.data || getEdDetails.data == "") {
+          Swal.fire({
+            position: "top-end",
+            width: "auto",
+            // padding: '0',
+            showConfirmButton: false,
+            background: "#D0342C",
+            html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Retrieved data is empty or  null</p>`,
+            showClass: {
+              popup: "animate__animated animate__fadeInLeft",
+            },
+            hideClass: {
+              popup: "animate__animated animate__fadeOutUp",
+            },
+
+            timer: 5000,
+
+            customClass: {
+              popup: "custom-swal-popup", // Assign a custom class name
+            },
+          });
         } else {
+          if (!getEdDetails.data.responseCode) {
+            Swal.fire({
+              position: "top-end",
+              width: "auto",
+              // padding: '0',
+              showConfirmButton: false,
+              background: "#D0342C",
+              html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Unable to retrieve data,Server error</p>`,
+              showClass: {
+                popup: "animate__animated animate__fadeInLeft",
+              },
+              hideClass: {
+                popup: "animate__animated animate__fadeOutUp",
+              },
+
+              timer: 5000,
+
+              customClass: {
+                popup: "custom-swal-popup", // Assign a custom class name
+              },
+            });
+          } else {
+            if (getEdDetails.data.responseCode == "0") {
+              Swal.fire({
+                position: "top-end",
+                width: "auto",
+                // padding: '0',
+                showConfirmButton: false,
+                background: "rgb(153, 12, 25)",
+                html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${getEdDetails.data.responseStatus}</p>`,
+                showClass: {
+                  popup: "animate__animated animate__fadeInLeft",
+                },
+                hideClass: {
+                  popup: "animate__animated animate__fadeOutUp",
+                },
+
+                // timer: 5000,
+
+                customClass: {
+                  popup: "custom-swal-popup", // Assign a custom class name
+                },
+              });
+            } else { 
+              if(!getEdDetails.data.response==" "){ 
+                // console.log(getEdDetails.data.response)  
+                // const respArray = Object.values(getEdDetails.data.response);
+                // setUserBasicDetails(respArray.slice(0,4));  
+                setUserBasicDetails(getEdDetails.data.response);  
+              }else {
+                navigate("/UserMainPage")
+                Swal.fire({
+                  position: "top-end",
+                  width: "auto",
+                  showConfirmButton: false,
+                  background: "orange",
+                  html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">No matching profiles</p>`,
+                  showClass: {
+                    popup: "animate__animated animate__fadeInLeft",
+                  },
+                  hideClass: {
+                    popup: "animate__animated animate__fadeOutUp",
+                  },
+                  timer: 4000,
+                  customClass: {
+                    popup: "custom-swal-popup", // Assign a custom class name
+                  },
+                });
+              }
+             
+            }
+          }
         }
-        // setEducationList(getEdDetails.data);
       }
     } catch (error) {
-      console.log("error : " + error);
       Swal.fire({
         position: "top-end",
         width: "auto",
@@ -100,14 +224,11 @@ const UserMainPage = (props) => {
         },
       });
     }
+    // }
   };
 
   const [postCommentsList, setPostCommentsList] = useState([]);
 
-  useEffect(() => {
-    getPostsCommentsDet();
-  }, []);
- 
 
   const getPostsCommentsDet = async () => {
     try {
@@ -168,102 +289,27 @@ const UserMainPage = (props) => {
     }
   };
 
-  const [post, setPost] = useState({
-    userId: userId,
-    roleId: roleId,
-    postDescription: "",
-    postImage: null,
-  });
+  
 
-  const [file, setFile] = useState(null);
-  const handlePostChange = (e) => {
-    if (e.target.type === "file") {
-      const selectedFile =
-        e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
-      // const selectedFile = e.target.files ? e.target.files[0] : null;
-
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-
-      const fileType = selectedFile.type.split("/")[1];
-
-      reader.onload = () => {
-        const base64String = reader.result.split(",")[1];
-
-        if (selectedFile.type == "application/pdf") {
-          setPost((prevData) => ({
-            ...prevData,
-            postImage: `data:application/pdf;base64,` + base64String,
-          }));
-          // setData((prev)=>({...prev,stamp:(`data:application/pdf;base64,` + base64String)}));
-        } else {
-          setPost((prevData) => ({
-            ...prevData,
-            postImage: `data:Image/${fileType};base64,` + base64String,
-          }));
-          // setData((prev)=>({...prev,stamp:(`data:image/${fileType};base64,` + base64String)}));
-        }
-      };
-    } else {
-      // alert(e.target.value);
-      setPost((prevData) => ({ ...prevData, [e.target.name]: e.target.value }));
-    }
-  };
-
-  const [profilePhoto, setProfilePhoto] = useState({
-    userId: userId,
-    userProfileImage: "",
-  });
-
-  const handleUserProfileImageChange = (e) => {
-    if (e.target.type === "file") {
-      const selectedFile =
-        e.target.files && e.target.files.length > 0 ? e.target.files[0] : null;
-
-      const reader = new FileReader();
-      reader.readAsDataURL(selectedFile);
-
-      const fileType = selectedFile.type.split("/")[1];
-
-      reader.onload = () => {
-        const base64String = reader.result.split(",")[1];
-
-        if (selectedFile.type == "application/pdf") {
-          setProfilePhoto((prevData) => ({
-            ...prevData,
-            userProfileImage: `data:application/pdf;base64,` + base64String,
-          }));
-        } else {
-          setProfilePhoto((prevData) => ({
-            ...prevData,
-            userProfileImage: `data:Image/${fileType};base64,` + base64String,
-          }));
-        }
-      };
-    }
-  };
-
-  const saveProfileImage = async () => {
+  const getEdDet = async (skillName) => {
     try {
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("userProfileImage", profilePhoto.userProfileImage);
-
-      const savedData = await axiosInstance.post(
-        "http://" + url + ":" + port + "/" + "userProfilePhotoSave",
-        formData,
+      const getEdDetails = await axiosInstance.post(
+        "http://" + url + ":" + port + "/" + "getPostsSaved",
+        {
+          skill:skillName,
+        },
         cfg
       );
 
-      // console.log("form data: " + JSON.stringify(formData));
-      if (savedData.data.responseCode == "0") {
+      console.log("da: " + JSON.stringify(getEdDetails));
+      if (getEdDetails.data.responseCode == "0") {
         Swal.fire({
           position: "top-end",
           width: "auto",
           // padding: '0',
           showConfirmButton: false,
           background: "rgb(153, 12, 25)",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${savedData.data.responseStatus}</p>`,
+          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${getEdDetails.data.responseStatus}</p>`,
           showClass: {
             popup: "animate__animated animate__fadeInLeft",
           },
@@ -278,39 +324,14 @@ const UserMainPage = (props) => {
           },
         });
       } else {
-        // alert(loginUrl.data.userId + "::" + loginUrl.data.roleId);
-        // const userId =  "";
-        // const roleId = "";
-        Swal.fire({
-          position: "top-end",
-          width: "auto",
-          // padding: '0',
-          showConfirmButton: false,
-          background: "rgb(27 123 84)",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Saved Successfully</p>`,
-          showClass: {
-            popup: "animate__animated animate__fadeInLeft",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-
-          // timer: 5000,
-
-          customClass: {
-            popup: "custom-swal-popup", // Assign a custom class name
-          },
-        });
-        // getEdDet();
-        // navigate("/UserHome",{userId,roleId});
+        if (getEdDetails.data) {
+          setPostsList(getEdDetails.data.response.slice(0,3));
+        } else {
+        }
+        // setEducationList(getEdDetails.data);
       }
     } catch (error) {
       console.log("error : " + error);
-      // if (error.response && error.response.data) {
-      // const errorMap = error.response.data;
-      // const errorMessage = Object.keys(errorMap)
-      //   .map(field => `${errorMap[field]}<br>`)
-      //   .join('');
       Swal.fire({
         position: "top-end",
         width: "auto",
@@ -328,190 +349,14 @@ const UserMainPage = (props) => {
           popup: "custom-swal-popup", // Assign a custom class name
         },
       });
-      // } else {
-      //   // Handle other types of errors (network error, etc.)
-      //   // You can display a generic error message or handle it differently
-      //   console.error("An unexpected error occurred:", error);
-      // }
     }
   };
 
-  const [data, setData] = useState({
-    school: "",
-    degree: "",
-    fieldOfStudy: "",
-    startDateMonth: "",
-    startDateYear: "",
-    endDateMonth: "",
-    endDateYear: "",
-    gradePercentage: "",
-    skills: "",
-    description: "",
-    userId: userId,
-    roleId: roleId,
-  });
-
-  const handleEducationEdit = () => {
-    navigate("/CandidateEducationEdit");
+  const handleImageError = (e) => {
+    e.target.src = Defaultprofile;
   };
 
-  const axiosInstance = axios.create();
-
-  const cfg = {
-    headers: {
-      //  Authorization:`Bearer ${token}`,
-      "Content-Type": "multipart/form-data",
-      // Accept: "application/json",
-    },
-  };
-
-  const cfgComments = {
-    headers: {
-      //  Authorization:`Bearer ${token}`,
-      "Content-Type": "application/json",
-      // Accept: "application/json",
-    },
-  };
-
-  axiosInstance.interceptors.response.use(
-    (cfg) => {
-      return cfg;
-    },
-    (err) => {
-      console.error(err);
-      return Promise.reject(err);
-    }
-  );
-
-  const handleChange = (event) => {
-    setData((prev) => ({ ...prev, [event.target.name]: event.target.value }));
-  };
-
-  const validateForm = async (event) => {
-    event.preventDefault();
-
-    const confirmResult = await Swal.fire({
-      title: "Are you sure you want to post?",
-      showCancelButton: true,
-      confirmButtonColor: "rgb(0, 72, 25)",
-      cancelButtonColor: "rgb(153, 12, 25)",
-      confirmButtonText: "Yes",
-      cancelButtonText: "Cancel",
-      // background: 'gray',
-      showClass: {
-        popup: "animate__animated animate__backInLeft",
-      },
-      hideClass: {
-        popup: "animate__animated animate__backOutRight",
-      },
-      customClass: {
-        popup: "custom-swal-popup",
-      },
-    });
-
-    if (confirmResult.isConfirmed) {
-      // console.log("Databef: " + JSON.stringify(post));
-
-      const formData = new FormData();
-      formData.append(
-        "postDescription",
-        post.postDescription.replace(/\n/g, "\\n")
-      );
-      formData.append("userId", userId);
-      formData.append("roleId", roleId);
-      formData.append("postImage", post.postImage);
-      try {
-        console.log("FormData contents:" + formData.toString());
-        console.dir(formData); // Use console.dir to log the contents
-
-        const savedData = await axiosInstance.post(
-          "http://" + url + ":" + port + "/" + "postsData",
-          formData,
-          cfg
-        );
-
-        // console.log("form data: " + JSON.stringify(formData));
-        if (savedData.data.responseCode == "0") {
-          Swal.fire({
-            position: "top-end",
-            width: "auto",
-            // padding: '0',
-            showConfirmButton: false,
-            background: "rgb(153, 12, 25)",
-            html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${savedData.data.responseStatus}</p>`,
-            showClass: {
-              popup: "animate__animated animate__fadeInLeft",
-            },
-            hideClass: {
-              popup: "animate__animated animate__fadeOutUp",
-            },
-
-            // timer: 5000,
-
-            customClass: {
-              popup: "custom-swal-popup", // Assign a custom class name
-            },
-          });
-        } else {
-          // alert(loginUrl.data.userId + "::" + loginUrl.data.roleId);
-          // const userId =  "";
-          // const roleId = "";
-          Swal.fire({
-            position: "top-end",
-            width: "auto",
-            // padding: '0',
-            showConfirmButton: false,
-            background: "rgb(27 123 84)",
-            html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Saved Successfully</p>`,
-            showClass: {
-              popup: "animate__animated animate__fadeInLeft",
-            },
-            hideClass: {
-              popup: "animate__animated animate__fadeOutUp",
-            },
-
-            // timer: 5000,
-
-            customClass: {
-              popup: "custom-swal-popup", // Assign a custom class name
-            },
-          });
-          getEdDet();
-          // navigate("/UserHome",{userId,roleId});
-        }
-      } catch (error) {
-        console.log("error : " + error);
-        // if (error.response && error.response.data) {
-        // const errorMap = error.response.data;
-        // const errorMessage = Object.keys(errorMap)
-        //   .map(field => `${errorMap[field]}<br>`)
-        //   .join('');
-        Swal.fire({
-          position: "top-end",
-          width: "auto",
-          showConfirmButton: false,
-          background: "rgb(153, 12, 25)",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${error}</p>`,
-          showClass: {
-            popup: "animate__animated animate__fadeInLeft",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-          // timer: 5000,
-          customClass: {
-            popup: "custom-swal-popup", // Assign a custom class name
-          },
-        });
-        // } else {
-        //   // Handle other types of errors (network error, etc.)
-        //   // You can display a generic error message or handle it differently
-        //   console.error("An unexpected error occurred:", error);
-        // }
-      }
-    }
-  };
-
+  const [postsList, setPostsList] = useState([]);
   const [showLess, setShowLess] = useState(true);
   const [showComplete, setShowComplete] = useState(false);
 
@@ -634,10 +479,6 @@ const UserMainPage = (props) => {
     }
   };
 
-  const handleImageError = (e) => {
-    e.target.src = Defaultprofile;
-  };
-
   return (
     <div
       style={{
@@ -680,171 +521,7 @@ const UserMainPage = (props) => {
                 // border: "0.5px solid #dfdcdc",
               }}
             >
-              <Popup
-                trigger={
-                  <img
-                    src={profileImage ? profileImage : Defaultprofile}
-                    style={{
-                      height: "80px",
-                      maxHeight: "80px",
-                      minHeight: "80px",
-                      width: "80px",
-                      maxWidth: "80px",
-                      minWidth: "80px",
-                      borderRadius: "50%",
-                      cursor: "pointer",
-                    }}
-                    alt={Defaultprofile}
-                    onError={handleImageError}
-                  />
-                }
-                position="center center"
-                modal
-              >
-                {(close) => (
-                  <form>
-                    <div
-                      style={{
-                        width: "400px",
-                        height: "350px",
-                        background: "white",
-
-                        border: "0.5px solid lightgray",
-                        borderRadius: "5px",
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                      }}
-                    >
-                      <div
-                        style={{
-                          height: "30px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          flexDirection: "row",
-                          padding: "10px 20px",
-                          fontSize: "20px",
-                          fontWeight: "600",
-                          borderBottom: "0.5px solid #dfdcdc",
-                          color: "var(--color-text)",
-                        }}
-                      >
-                        <div>Profile Image</div>
-
-                        <span
-                          className="editIconPen"
-                          style={{
-                            borderRadius: "50%",
-                            padding: "3px 7px 4px 7px ",
-                            alignItems: "center",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                          onClick={close}
-                        >
-                          <FontAwesomeIcon
-                            className="editIcon"
-                            style={{}}
-                            icon={faXmark}
-                          />
-                        </span>
-                      </div>
-                      <br></br>
-
-                      <div
-                        style={{
-                          padding: "10px 20px",
-                          overflow: "auto",
-                        }}
-                      >
-                        <div
-                          className=""
-                          style={{ display: "flex", justifyContent: "center" }}
-                        >
-                          <img
-                            src={profileImage}
-                            style={{
-                              height: "180px",
-                              maxHeight: "180px",
-                              minHeight: "180px",
-                              width: "180px",
-                              maxWidth: "180px",
-                              minWidth: "180px",
-                              borderRadius: "50%",
-                            }}
-                            alt={Defaultprofile}
-                          ></img>
-                        </div>
-                        <br></br>
-                      </div>
-
-                      <div
-                        style={{
-                          height: "35px",
-                          display: "flex",
-                          justifyContent: "space-between",
-                          flexDirection: "row",
-                          padding: "10px 20px",
-                          border: "0.5px solid #dfdcdc",
-                          // color: "var(--color-text)",
-                        }}
-                      >
-                        <span
-                          className="editIconPen"
-                          style={{
-                            borderRadius: "50%",
-                            padding: "3px 7px 4px 7px ",
-                            alignItems: "center",
-                            display: "flex",
-                            justifyContent: "center",
-                          }}
-                        >
-                          <input
-                            type="file"
-                            accept=".jpeg,.jpg"
-                            style={{ display: "none" }}
-                            name="userProfileImage"
-                            id="userProfileImage"
-                            onChange={handleUserProfileImageChange}
-                          />
-                          <label htmlFor="userProfileImage">
-                            <FontAwesomeIcon
-                              className="editIcon"
-                              style={{}}
-                              icon={faImage}
-                              size="lg"
-                            />
-                          </label>
-                        </span>
-                        <button
-                          type="button"
-                          onClick={saveProfileImage}
-                          className="saveBtn"
-                        >
-                          Save
-                        </button>
-                      </div>
-                    </div>
-                  </form>
-                )}
-              </Popup>
-
-              <label
-                style={{
-                  fontWeight: "600",
-                  color: "--color-text",
-                  fontSize: "16px",
-                  color: "gray",
-                  // lineHeight: "15px",
-                  cursor: "pointer",
-                }}
-                onClick={() => {
-                  navigate("/UserHome");
-                }}
-              >
-                {firstName.charAt(0).toUpperCase() +
-                  firstName.slice(1).toLowerCase()}
-              </label>
+                
             </div>
             <br></br>
 
@@ -1050,212 +727,183 @@ const UserMainPage = (props) => {
           <div className="spaceDiv" style={{ width: "15px" }}></div>
 
           <div className="middleDiv" style={{ width: "610px" }}>
-            <div
+              
+          <div
               className="FirstLeftSideDiv"
               style={{
                 backgroundColor: "white",
                 borderRadius: "5px",
-                
+                border: "0.5px solid #dfdcdc",
               }}
             >
-               
+              
 
               <div
                 style={{
-                  padding: "15px 0px 15px 20px",
+                  padding: "10px 20px 5px 20px",
                   color: "var(--color-text)",
                   display: "flex",
-                  // flexDirection: "column",
-                  alignItems: "center",
+                  flexDirection: "column",
                 }}
               >
-                <div
+                <label
                   style={{
-                    width: "45px",
-                    height: "45px",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    borderRadius: "50%",
+                    fontWeight: "600",
+                    fontSize: "19px",
+                    // background:'gray'
+                    // lineHeight: "35px",
+                    // marginBottom: "10px",
                   }}
                 >
-                  <img
-                    src={profileImage}
-                    style={{
-                      height: "45px",
-                      maxHeight: "45px",
-                      minHeight: "45px",
-                      width: "45px",
-                      maxWidth: "45px",
-                      minWidth: "45px",
-                      borderRadius: "50%",
-                    }}
-                    alt=""
-                  />
-                </div>
-                &nbsp; &nbsp;
-                <div className="inputDataDivCJPMainPage">
-                  {/* <label>School</label> */}
-
-                  <Popup
-                    trigger={
-                      <input
-                        style={{
-                          background: "none",
-                          borderRadius: "20px",
-                          padding: "5px 10px",
-                          cursor: "pointer",
-                        }}
-                        placeholder="Start writing or post something"
-
-                        // value={data.school}
-                      />
-                    }
-                    position="center center"
-                    modal
-                  >
-                    {(close) => (
-                      <form onSubmit={validateForm}>
+                  People
+                </label>
+                {userBasicDetails &&
+                  Object.entries(userBasicDetails).map(([key, value]) => (
+                    <div
+                      key={key}
+                      style={{
+                        display: "flex",
+                        flexDirection: "column",
+                        borderBottom: "0.5px solid #dfdcdc",
+                        padding: "15px 0",
+                      }}
+                    >
+                      <div style={{ display: "flex" }}>
+                        <div style={{ paddingTop: "10px" }}>
+                          <img
+                            style={{
+                              height: "47px",
+                              maxHeight: "47px",
+                              minHeight: "47px",
+                              width: "48px",
+                              maxWidth: "48px",
+                              minWidth: "48px",
+                              borderRadius: "50%",
+                            }}
+                            src={
+                              value.userProfileImage
+                                ? value.userProfileImage
+                                : Defaultprofile
+                            }
+                            alt={Defaultprofile}
+                            onError={handleImageError}
+                          />{" "}
+                        </div>{" "}
+                        &nbsp; &nbsp;
                         <div
-                          style={{
-                            width: "750px",
-                            height: "490px",
-                            background: "white",
-                            display: "flex",
-                            border: "0.5px solid lightgray",
-                            borderRadius: "5px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "flex-start",
-                          }}
+                          style={{ display: "flex", flexDirection: "column" }}
                         >
-                          <div
+                          <label
                             style={{
-                              height: "28px",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              padding: "20px 30px",
-                              fontSize: "20px",
                               fontWeight: "600",
-                              // borderBottom: "0.5px solid #dfdcdc",
-                              color: "var(--color-text)",
+                              color: "--color-text",
+                              lineHeight: "25px",
                             }}
                           >
-                            <div>
-                              {firstName &&
-                                firstName.charAt(0).toUpperCase() +
-                                  firstName.slice(1).toLowerCase()}
-                              &nbsp;
-                              {lastName &&
-                                lastName.charAt(0).toUpperCase() +
-                                  lastName.slice(1).toLowerCase()}
-                            </div>
-
-                            <span
-                              className="editIconPen"
-                              style={{
-                                borderRadius: "50%",
-                                padding: "3px 7px 4px 7px ",
-                                alignItems: "center",
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                              onClick={close}
-                            >
-                              <FontAwesomeIcon
-                                className="editIcon"
-                                style={{}}
-                                icon={faXmark}
-                              />
-                            </span>
-                          </div>
-                          {/* <br></br> */}
-
-                          <div
+                            {value.lastname &&
+                              value.lastname.charAt(0).toUpperCase() +
+                                value.lastname.slice(1).toLowerCase()}{" "}
+                            &nbsp;
+                            {value.firstname &&
+                              value.firstname.charAt(0).toUpperCase() +
+                                value.firstname.slice(1).toLowerCase()}
+                          </label>
+                          <label
                             style={{
-                              // padding: "10px 20px",
-                              overflow: "hidden",
-                              height: "400px",
+                              color: "--color-text",
+                              fontSize: "14px",
+                              color: "gray",
+                              lineHeight: "20px",
                             }}
                           >
-                            <div
-                              className=""
-                              style={{ margin: "0", padding: "0 0 0 20px" }}
-                            >
-                              <textarea
-                                placeholder="Start writing something."
-                                required
-                                type="text"
-                                name="postDescription"
-                                id="postDescription"
-                                value={post.postDescription}
-                                style={{
-                                  height: "350px",
-                                  fontSize: "20px",
-                                  width: "95%",
-                                  fontFamily: "inherit",
-                                  padding: "5px",
-                                  border: "none",
-                                  outline: "none",
-                                  textTransform: "capitalize",
-                                }}
-                                onChange={handlePostChange}
-                              />
-                            </div>
-                            <br></br>
-                          </div>
-
-                          <div
+                            Skill :{" "}
+                            {value.skill &&
+                              value.skill.charAt(0).toUpperCase() +
+                                value.skill.slice(1).toLowerCase()}
+                          </label>
+                          <label
                             style={{
-                              height: "28px",
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexDirection: "row",
-                              padding: "10px 20px",
-                              border: "0.5px solid #dfdcdc",
-                              // color: "var(--color-text)",
+                              color: "--color-text",
+                              fontSize: "14px",
+                              color: "gray",
+                              lineHeight: "20px",
                             }}
                           >
-                            <span
-                              className="editIconPen"
-                              style={{
-                                borderRadius: "50%",
-                                padding: "3px 7px 4px 7px ",
-                                alignItems: "center",
-                                display: "flex",
-                                justifyContent: "center",
-                              }}
-                            >
-                              <input
-                                type="file"
-                                style={{ display: "none" }}
-                                name="postImage"
-                                id="postImage"
-                                onChange={handlePostChange}
-                              />
-                              <label htmlFor="postImage">
-                                <FontAwesomeIcon
-                                  className="editIcon"
-                                  style={{}}
-                                  icon={faImage}
-                                  size="lg"
-                                />
-                              </label>
-                            </span>
-                            <button type="submit" className="saveBtn">
-                              Post
-                            </button>
-                          </div>
+                            Dec 2022 -Present
+                          </label>
+                          <label
+                            style={{
+                              color: "--color-text",
+                              fontSize: "14px",
+                              color: "gray",
+                              lineHeight: "20px",
+                            }}
+                          >
+                            Hyderabad, Telangana, India
+                          </label>
                         </div>
-                      </form>
-                    )}
-                  </Popup>
-                </div>
-                <br></br>
+                      </div>
+                    </div>
+                  ))} 
+                  
               </div>
-            </div>
-            <br></br>
+              <div
+                style={{
+                  padding: "0px 20px 5px 20px",
+                  color: "var(--color-text)",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              ><label
+              onClick={()=>{navigate("/People")}}
+              className="showAll"
+                style={{
+                  fontWeight: "600",
+                  fontSize: "17px",
+                  textAlign:'center',
+                  padding:'8px 5px',
+                  cursor:'pointer', 
+                }}
+              >
+                Show all people
+              </label>
+
+                </div>
+          </div>
+
+          <br></br>
+
+          <div className="middleDiv" style={{ width: "610px" }}>
+          <div
+              className="FirstLeftSideDiv"
+              style={{
+                backgroundColor: "white",
+                borderRadius: "5px",
+                // border: "0.5px solid #dfdcdc",
+              }}
+            >
+              
+
+              <div
+                style={{
+                  padding: "10px 20px 5px 20px",
+                  color: "var(--color-text)",
+                  display: "flex",
+                  flexDirection: "column",
+                }}
+              >
+                <label
+                  style={{
+                    fontWeight: "600",
+                    fontSize: "19px", 
+                  }}
+                >
+                  Posts
+                </label>
+                </div>
+                </div>
+            
+           
             {postsList &&
               postsList.map((data) => (
                 <div
@@ -1263,7 +911,7 @@ const UserMainPage = (props) => {
                   style={{
                     backgroundColor: "white",
                     BorderRadius: "5px",
-                    border: "0.5px solid #dfdcdc",
+                    // border: "0.5px solid #dfdcdc",
                     marginBottom: "10px",
                     height: "auto",
                   }}
@@ -1573,6 +1221,9 @@ const UserMainPage = (props) => {
             <br></br>
           </div>
 
+          <br></br>
+          </div>
+
           <div className="spaceDiv" style={{ width: "15px" }}></div>
 
           <div className="RightSideDiv"
@@ -1739,4 +1390,4 @@ const UserMainPage = (props) => {
     </div>
   );
 };
-export default UserMainPage;
+export default UserProfiles;

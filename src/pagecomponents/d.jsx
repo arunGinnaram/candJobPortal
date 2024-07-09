@@ -50,19 +50,25 @@ const UserHome = (props) => {
   const userId = sessionStorage.getItem("userId");
   const roleId = sessionStorage.getItem("roleId");
 
-  const [educationList,setEducationList] = useState([]);
+  const [educationList, setEducationList] = useState([]);
 
-  useEffect(()=>{  
-getEdDet();
-  },[])
+  useEffect(() => {
+    getEdDet();
+  }, []);
 
   const getEdDet = async () => {
     try {
       const getEdDetails = await axiosInstance.post(
-        "http://" + url + ":" + port + "/" + "getcandidateEducationDetails?userId="+userId,       
+        "http://" +
+          url +
+          ":" +
+          port +
+          "/" +
+          "getcandidateEducationDetails?userId=" +
+          userId,
         cfg
       );
-    
+
       console.log("da: " + JSON.stringify(getEdDetails));
       if (getEdDetails.data.responseCode == "0") {
         Swal.fire({
@@ -78,9 +84,9 @@ getEdDet();
           hideClass: {
             popup: "animate__animated animate__fadeOutUp",
           },
-    
+
           // timer: 5000,
-    
+
           customClass: {
             popup: "custom-swal-popup", // Assign a custom class name
           },
@@ -103,14 +109,14 @@ getEdDet();
         //   hideClass: {
         //     popup: "animate__animated animate__fadeOutUp",
         //   },
-    
+
         //   // timer: 5000,
-    
+
         //   customClass: {
         //     popup: "custom-swal-popup", // Assign a custom class name
         //   },
         // });
-    
+
         // navigate("/UserHome",{userId,roleId});
       }
     } catch (error) {
@@ -143,17 +149,14 @@ getEdDet();
       //   console.error("An unexpected error occurred:", error);
       // }
     }
-  
-   
-  }
+  };
 
   let { state } = useLocation();
 
   // const location = useLocation();
 
   // const { state } = props;
-//  const { name, age } = state;
-
+  //  const { name, age } = state;
 
   // const { userId } = state;
 
@@ -197,7 +200,7 @@ getEdDet();
       return cfg;
     },
     (err) => {
-      console.error("Axios Err" + err);
+      console.error(err);
       return Promise.reject(err);
     }
   );
@@ -1002,68 +1005,68 @@ getEdDet();
                     </span>
                   </span>
                 </label>
-                    {educationList.map((item,index)=>(
-                          <div
-                          key={index}
-                          style={{
-                            display: "flex",
-                            flexDirection: "column",
-                            borderBottom: "0.5px solid #dfdcdc",
-                          }}
-                          >
-                          <label
-                            style={{
-                              fontWeight: "600",
-                              color: "--color-text",
-                              lineHeight: "25px",
-                            }}
-                          >
-                            {item.school} 
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                            {item.fieldOfStudy}  
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                             {item.startDateMonth}/{item.startDateYear } - {item.endDateMonth}/{item.endDateYear }   
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                             {item.gradePercentage}
-                          </label>
-                          <label
-                            style={{
-                              color: "--color-text",
-                              fontSize: "14px",
-                              color: "gray",
-                              lineHeight: "20px",
-                            }}
-                          >
-                             {item.skills}
-                          </label>
-                          <br />
-                          </div>
-                                ))}
-               
+                {educationList.map((item, index) => (
+                  <div
+                    key={index}
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      borderBottom: "0.5px solid #dfdcdc",
+                    }}
+                  >
+                    <label
+                      style={{
+                        fontWeight: "600",
+                        color: "--color-text",
+                        lineHeight: "25px",
+                      }}
+                    >
+                      {item.school}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.fieldOfStudy}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.startDateMonth}/{item.startDateYear} -{" "}
+                      {item.endDateMonth}/{item.endDateYear}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.gradePercentage}
+                    </label>
+                    <label
+                      style={{
+                        color: "--color-text",
+                        fontSize: "14px",
+                        color: "gray",
+                        lineHeight: "20px",
+                      }}
+                    >
+                      {item.skills}
+                    </label>
+                    <br />
+                  </div>
+                ))}
 
                 {/* <div style={{ display: "flex", flexDirection: "column" }}>
                   <label

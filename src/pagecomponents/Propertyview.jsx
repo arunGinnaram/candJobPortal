@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef, useContext } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import Sidevavbar from "./Sidevavbar";
 import "./Login.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -20,7 +20,7 @@ import Swal from "sweetalert2";
 import { json, useLocation, useNavigate } from "react-router-dom";
 import Header from "./Header";
 import $ from "jquery";
-import fileDetails from './editProp.json';
+import fileDetails from "./editProp.json";
 
 import { languageContext } from "../App";
 
@@ -32,37 +32,38 @@ const Propertyview = () => {
   const token = sessionStorage.getItem("token");
   const fileData = fileDetails.response;
 
-  const { lang, setLang } = useContext(languageContext); 
+  const { lang, setLang } = useContext(languageContext);
 
   const axiosInstance = axios.create();
 
-        const cfg = {
-          headers: {
-             Authorization:`Bearer ${token}`, 
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        };
+  const cfg = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+      Accept: "application/json",
+    },
+  };
 
-        axiosInstance.interceptors.response.use(
-          (cfg) => {
-            return cfg;
-          },
-          (err) => {
-            console.error("Axios Err" + err);
-            return Promise.reject(err);
-          }
-        );
+  axiosInstance.interceptors.response.use(
+    (cfg) => {
+      return cfg;
+    },
+    (err) => {
+      console.error(err);
+      return Promise.reject(err);
+    }
+  );
 
   const userId = sessionStorage.getItem("userId");
   // alert(userId);
 
-  // const navigate = useNavigate(); 
+  // const navigate = useNavigate();
 
- 
-
-  useEffect(()=>{
-    if(sessionStorage.getItem("token")=="" || sessionStorage.getItem("token")==null ){
+  useEffect(() => {
+    if (
+      sessionStorage.getItem("token") == "" ||
+      sessionStorage.getItem("token") == null
+    ) {
       Swal.fire({
         position: "top-end",
         width: "auto",
@@ -76,62 +77,62 @@ const Propertyview = () => {
         hideClass: {
           popup: "animate__animated animate__fadeOutUp",
         },
-    
+
         timer: 5000,
-    
+
         customClass: {
           popup: "custom-swal-popup", // Assign a custom class name
         },
-      }); 
-       navigate("/mumbaipolicestation"); 
+      });
+      navigate("/mumbaipolicestation");
     }
-      },[]);
+  }, []);
 
   let { state } = useLocation();
 
-  const [image,setImage] = useState(false);
+  const [image, setImage] = useState(false);
 
   // useEffect(()=>{
 
   // },[image])
 
-  const [sizeOfFileInfos,setSizeOfFileInfos] = useState([]);
+  const [sizeOfFileInfos, setSizeOfFileInfos] = useState([]);
 
   const [filesOnly, setFilesOnly] = useState([]);
 
-  
-  const flag = useRef(false); 
+  const flag = useRef(false);
 
-  
   useEffect(() => {
-    
-    if (state) { 
-getDataEdit(); 
+    if (state) {
+      getDataEdit();
 
-state=null;
+      state = null;
     }
   }, [state]);
 
-
   const getDataEdit = async () => {
+    try {
+      const getDataById = await axiosInstance.post(
+        "http://" + url + ":" + port + "/" + "editProperty",
+        {
+          propertyId: state,
+        },
+        cfg
+      );
 
-    try {              
-      const getDataById = await axiosInstance.post('http://'+url+':'+port+'/'+'editProperty',{
-        propertyId: state
-      },cfg);
-       
-      console.log("D: " + JSON.stringify(getDataById.data) );
-      if(getDataById.data.message=="SUCCESS" && getDataById.data.code=="1" ){
+      console.log("D: " + JSON.stringify(getDataById.data));
+      if (
+        getDataById.data.message == "SUCCESS" &&
+        getDataById.data.code == "1"
+      ) {
         //  navigate("/mumbaipolicestation/Propertycreation", { state: getDataById.data });
-  
-  
-        flag.current=true;
-        
-        if(flag.current){
-          $("#docName").prop("required",false);
+
+        flag.current = true;
+
+        if (flag.current) {
+          $("#docName").prop("required", false);
         }
-        
-  
+
         setData({
           propertyName: getDataById.data.response.propertyName,
           location: getDataById.data.response.location,
@@ -142,37 +143,35 @@ state=null;
           district: getDataById.data.response.district,
           city: getDataById.data.response.city,
           pincode: getDataById.data.response.pincode,
-          openPlot: parseInt(getDataById.data.response.openPlot,10),
-          building:  parseInt(getDataById.data.response.building,10),
-          ground:  parseInt(getDataById.data.response.ground,10),
-          noProperty:  parseInt(getDataById.data.response.noProperty,10),
+          openPlot: parseInt(getDataById.data.response.openPlot, 10),
+          building: parseInt(getDataById.data.response.building, 10),
+          ground: parseInt(getDataById.data.response.ground, 10),
+          noProperty: parseInt(getDataById.data.response.noProperty, 10),
           policeStationId: 1,
           areaUnits: getDataById.data.response.areaUnits,
           areaOfProperty: getDataById.data.response.areaOfProperty,
-           fileInfos: getDataById.data.response.fileInfos,
-           userId:userId,
-           propertyId: getDataById.data.response.propertyId, 
-           
-           
+          fileInfos: getDataById.data.response.fileInfos,
+          userId: userId,
+          propertyId: getDataById.data.response.propertyId,
         });
-        
+
         // getDataById.data.response.fileInfos.forEach((fI) => {
         //   console.log("D: " + fI);
         // })
-        const extractedFile = getDataById.data.response.fileInfos ; 
-   
+        const extractedFile = getDataById.data.response.fileInfos;
+
         setSizeOfFileInfos(getDataById.data.response.fileInfos);
         // alert(getDataById.data.response.fileInfos.length);
-    
-        if(getDataById.data.response.fileInfos.length>0) { 
-          console.log("file: " + JSON.stringify(filesOnly) ); 
-          setFilesOnly(extractedFile); 
-            setImage(true); 
-        }else if(getDataById.data.response.fileInfos.length==0) {
-          setFilesOnly(extractedFile); 
-          setImage(false); 
-        } 
-  
+
+        if (getDataById.data.response.fileInfos.length > 0) {
+          console.log("file: " + JSON.stringify(filesOnly));
+          setFilesOnly(extractedFile);
+          setImage(true);
+        } else if (getDataById.data.response.fileInfos.length == 0) {
+          setFilesOnly(extractedFile);
+          setImage(false);
+        }
+
         if (
           (data.location == "HITECHCITY" &&
             getDataById.data.response.location == "HITECHCITY") ||
@@ -183,96 +182,87 @@ state=null;
         ) {
           $('select[name="location"]').val(data.location);
         }
-  
-       
-  
+
         if (
           (data.areaUnits == "SQR_FT." &&
             getDataById.data.response.areaUnits == "SQR_FT.") ||
           (data.areaUnits == "SQR_YARD" &&
             getDataById.data.response.areaUnits == "SQR_YARD") ||
-          (data.areaUnits == "MT_SQR." && getDataById.data.response.areaUnits == "MT_SQR.")
+          (data.areaUnits == "MT_SQR." &&
+            getDataById.data.response.areaUnits == "MT_SQR.")
         ) {
           $('select[name="areaUnits"]').val(data.areaUnits);
         }
-  
-  
-  
-      } else { 
+      } else {
         Swal.fire({
           position: "top-end",
           width: "auto",
           // padding: '0',
           showConfirmButton: false,
           background: "#D0342C",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${getDataById.data.message + " : "+ getDataById.data.response}</p>`,
+          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">${
+            getDataById.data.message + " : " + getDataById.data.response
+          }</p>`,
           showClass: {
             popup: "animate__animated animate__fadeInLeft",
           },
           hideClass: {
             popup: "animate__animated animate__fadeOutUp",
           },
-    
+
           timer: 5000,
-    
+
           customClass: {
-              popup: 'custom-swal-popup', // Assign a custom class name
-            },
-        }); 
-    
+            popup: "custom-swal-popup", // Assign a custom class name
+          },
+        });
       }
-                         
-      }catch(error) {
-        // console.log("D: " + JSON.stringify(error.response.data) );
-        // const errorMap = error.response.data;
-        //   const errorMessage = Object.keys(errorMap)
-        // .map(field => `${errorMap[field]}`)
-        // .join('');
-    
-        Swal.fire({
-          position: "top-end",
-          width: "auto",
-          // padding: '0',
-          showConfirmButton: false,
-          background: "#D0342C",
-          html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Server error</p>`,
-          showClass: {
-            popup: "animate__animated animate__fadeInLeft",
-          },
-          hideClass: {
-            popup: "animate__animated animate__fadeOutUp",
-          },
-    
-          timer: 5000,
-    
-          customClass: {
-              popup: 'custom-swal-popup', // Assign a custom class name
-            },
-        });                    
-      }  
-  
-  }
+    } catch (error) {
+      // console.log("D: " + JSON.stringify(error.response.data) );
+      // const errorMap = error.response.data;
+      //   const errorMessage = Object.keys(errorMap)
+      // .map(field => `${errorMap[field]}`)
+      // .join('');
 
-   
+      Swal.fire({
+        position: "top-end",
+        width: "auto",
+        // padding: '0',
+        showConfirmButton: false,
+        background: "#D0342C",
+        html: `<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Server error</p>`,
+        showClass: {
+          popup: "animate__animated animate__fadeInLeft",
+        },
+        hideClass: {
+          popup: "animate__animated animate__fadeOutUp",
+        },
 
-        const [selectedFileImage, setSelectedFileImage] = useState(null);
+        timer: 5000,
 
-        const handleModalClose = () => {
-          setSelectedFileImage(null);
-        };
+        customClass: {
+          popup: "custom-swal-popup", // Assign a custom class name
+        },
+      });
+    }
+  };
+
+  const [selectedFileImage, setSelectedFileImage] = useState(null);
+
+  const handleModalClose = () => {
+    setSelectedFileImage(null);
+  };
 
   // const filesOnly = state.response.fileInfos.map((imp) => imp.file);
 
   const handleButtonClick = (file) => {
     setSelectedFileImage(file);
-  }; 
+  };
 
   const handleDeleteFile = async (fId) => {
-    // alert(data.propertyId  + "::: " +  fId);  
+    // alert(data.propertyId  + "::: " +  fId);
 
-   
-
-console.log("token: " + token);
+    console.log("token: " + token);
     const confirmResult = await Swal.fire({
       // : 'Confirmation',
       title: "Are you sure you want to delete?",
@@ -293,36 +283,33 @@ console.log("token: " + token);
       },
     });
 
+    if (confirmResult.isConfirmed) {
+      try {
+        console.log(
+          "url: " + "http://" + url + ":" + port + "/" + "deletePropertyFile"
+        );
+        console.log("cfg: " + JSON.stringify(cfg));
+        console.log("data: " + "propertyId" + data.propertyId, "fileId" + fId);
+        const deleteFile = await axios.delete(
+          "http://" + url + ":" + port + "/" + "deletePropertyFile",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            data: {
+              propertyId: data.propertyId,
+              fileId: fId,
+            },
+          }
+        );
 
-    if(confirmResult.isConfirmed){
-      try{
-
-        console.log("url: " + "http://"+ url+":"+port+"/"+"deletePropertyFile"  );
-        console.log("cfg: " + JSON.stringify(cfg)  );
-        console.log("data: " +  "propertyId"+ data.propertyId,
-        "fileId"+ fId,  );
-        const deleteFile = await axios.delete("http://"+ url+":"+port+"/"+"deletePropertyFile",
-        {headers: {
-          Authorization:`Bearer ${token}`,  
-       },
-        data : {
-          "propertyId": data.propertyId,
-          "fileId": fId,
-        }});
-
-        getDataEdit(); 
+        getDataEdit();
 
         // console.log("token: " + JSON.stringify(deleteFile) );
         console.log("Response: " + JSON.stringify(deleteFile.data));
-
-        
-      }catch(error) {
-        
-      }
-
+      } catch (error) {}
     }
-    
-  }
+  };
 
   const [data, setData] = useState({
     propertyName: "",
@@ -341,9 +328,9 @@ console.log("token: " + token);
     policeStationId: 1,
     areaUnits: "",
     areaOfProperty: "",
-    userId:userId,
+    userId: userId,
     fileInfos: null,
-    propertyId:""
+    propertyId: "",
   });
 
   const handleReset = () => {
@@ -365,7 +352,7 @@ console.log("token: " + token);
       areaUnits: "",
       areaOfProperty: "",
       fileInfos: null,
-      propertyId: "", 
+      propertyId: "",
     });
 
     setFileInputs([{ id: 1, file: null, fileName: "", documentName: "" }]);
@@ -478,16 +465,15 @@ console.log("token: " + token);
       const reader = new FileReader();
       reader.readAsDataURL(file);
 
-      const fileType = file.type.split('/')[1];
+      const fileType = file.type.split("/")[1];
 
       reader.onload = () => {
         const base64String = reader.result.split(",")[1];
-        if(file.type=="pdf"){
-          resolve(`data:application/${fileType};base64,`+base64String);
-        }else {
-          resolve(`data:image/${fileType};base64,`+base64String);
+        if (file.type == "pdf") {
+          resolve(`data:application/${fileType};base64,` + base64String);
+        } else {
+          resolve(`data:image/${fileType};base64,` + base64String);
         }
-        
       };
 
       reader.onerror = (error) => {
@@ -501,15 +487,13 @@ console.log("token: " + token);
     { id: 1, file: null, fileName: "", documentName: "" },
   ]);
 
-  
-
   const handleFileChange = async (id, event) => {
     const selectedFile = event.target.files[0];
     const newFileInputs = await Promise.all(
       fileInputs.map(async (input) =>
         input.id === id
           ? {
-              ...input, 
+              ...input,
               file: selectedFile ? await fileToBase64(selectedFile) : null,
               fileName: selectedFile ? selectedFile.name : "",
             }
@@ -556,7 +540,7 @@ console.log("token: " + token);
   // };
 
   const validateForm = async (event) => {
-    // alert("just in validate : " +flag.current); 
+    // alert("just in validate : " +flag.current);
     // console.log(data);
     event.preventDefault();
     // console.log(fileInputs[0]);
@@ -587,42 +571,44 @@ console.log("token: " + token);
         },
       });
       return false;
-    } else if(!flag.current && fileInputs.some(
-      (input) =>
-        !input.documentName ||
-        input.documentName.trim() === "" ||
-        !input.file ||
-        !input.fileName ||
-        input.fileName.trim() === ""  
-        // !input.file.type || 
-        // !['pdf','jpg','jpeg'].includes(input.file.type.split('/')[1]) 
-    )) {
-      // alert("Fsdfl: " +flag); 
-        {
-        
+    } else if (
+      !flag.current &&
+      fileInputs.some(
+        (input) =>
+          !input.documentName ||
+          input.documentName.trim() === "" ||
+          !input.file ||
+          !input.fileName ||
+          input.fileName.trim() === ""
+        // !input.file.type ||
+        // !['pdf','jpg','jpeg'].includes(input.file.type.split('/')[1])
+      )
+    ) {
+      // alert("Fsdfl: " +flag);
+      {
         // if( fileInputs.some(
         //   (input) => !['pdf','jpg','jpeg'].includes(input.file.type.split('/')[1]) ) ) {
-          Swal.fire({
-            position: "top-end",
-            width: "auto",
-            // padding: '0',
-            showConfirmButton: false,
-            background: "rgb(153, 12, 25)",
-            html: '<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Please select files of type pdf, jpeg, jpg only.</p>',
-            showClass: {
-              popup: "animate__animated animate__fadeInLeft",
-            },
-            hideClass: {
-              popup: "animate__animated animate__fadeOutUp",
-            },
-    
-            timer: 5000,
-    
-            customClass: {
-              popup: "custom-swal-popup", // Assign a custom class name
-            },
-          });
-          return false;
+        Swal.fire({
+          position: "top-end",
+          width: "auto",
+          // padding: '0',
+          showConfirmButton: false,
+          background: "rgb(153, 12, 25)",
+          html: '<p style="color: white;letter-spacing: 1px;font-weight:bold;margin: 0px ;font-family: Montserrat, sans-serif;">Please select files of type pdf, jpeg, jpg only.</p>',
+          showClass: {
+            popup: "animate__animated animate__fadeInLeft",
+          },
+          hideClass: {
+            popup: "animate__animated animate__fadeOutUp",
+          },
+
+          timer: 5000,
+
+          customClass: {
+            popup: "custom-swal-popup", // Assign a custom class name
+          },
+        });
+        return false;
         // }else{
         //   Swal.fire({
         //     position: "top-end",
@@ -637,26 +623,23 @@ console.log("token: " + token);
         //     hideClass: {
         //       popup: "animate__animated animate__fadeOutUp",
         //     },
-    
+
         //     timer: 5000,
-    
+
         //     customClass: {
         //       popup: "custom-swal-popup", // Assign a custom class name
         //     },
         //   });
         //   return false;
         // }
-       
       }
-    } 
-    
+    }
+
     // else {
 
-    // } 
-     else {  
+    // }
+    else {
       const saveData = async () => {
-        
-
         const confirmResult = await Swal.fire({
           // : 'Confirmation',
           title: "Are you sure you want to save?",
@@ -736,7 +719,6 @@ console.log("token: " + token);
               const errorMessage = Object.values(errorMap);
               // .join("\n");
               // .map(([key, value]) => `${key}`);
-             
 
               console.log("${errorMessage}" + errorMessage);
               Swal.fire({
@@ -838,40 +820,35 @@ console.log("token: " + token);
     }
   };
 
-
   const handleEditClick = async (pId) => {
     const confirmResult = await Swal.fire({
       // : 'Confirmation',
-      title: 'Are you sure you want to edit?',
+      title: "Are you sure you want to edit?",
       showCancelButton: true,
-      confirmButtonColor: 'rgb(22, 145, 101)',
-      cancelButtonColor: '#D0342C',
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'Cancel',
+      confirmButtonColor: "rgb(22, 145, 101)",
+      cancelButtonColor: "#D0342C",
+      confirmButtonText: "Yes",
+      cancelButtonText: "Cancel",
       // background: 'gray',
       showClass: {
-        popup: 'animate__animated animate__backInLeft',
+        popup: "animate__animated animate__backInLeft",
       },
       hideClass: {
-        popup: 'animate__animated animate__backOutRight',
+        popup: "animate__animated animate__backOutRight",
       },
       customClass: {
-        popup: 'custom-swal-popup',  
+        popup: "custom-swal-popup",
       },
-    }); 
+    });
 
-     
-    if(confirmResult.isConfirmed){
+    if (confirmResult.isConfirmed) {
       navigate("/mumbaipolicestation/Propertycreation", { state: pId });
-          
-    } 
-  }
-
-
-
+    }
+  };
 
   return (
-    <div className="propView"
+    <div
+      className="propView"
       style={{
         background: "var(--color-component-background)",
         height: "auto",
@@ -915,12 +892,7 @@ console.log("token: " + token);
               size="lg"
               bounce
             />
-            P
-            
-               
-            
-              <span className="innerText">ROPERTY VIEW</span>
-            
+            P<span className="innerText">ROPERTY VIEW</span>
           </div>
           <form>
             <div
@@ -936,73 +908,96 @@ console.log("token: " + token);
                 className="Subdiv1"
                 style={{ width: "60%", boxSizing: "border-box" }}
               >
-                <div style={{ background: "white"}}>
+                <div style={{ background: "white" }}>
+                  <div className="propViewTable">
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
+                          </td>
+                          <td>{data.propertyName}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0
+                              ? "CTS - Survey Number"
+                              : "सर्वेक्षण क्रमांक"}
+                          </td>
+                          <td>{data.cts}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
+                          </td>
+                          <td>{data.landmark}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Location" : "स्थान"}
+                          </td>
+                          <td>{data.location}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Area units" : "क्षेत्र युनिट्स"}
+                          </td>
+                          <td>{data.areaUnits}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Area" : "क्षेत्रफळ"}
+                          </td>
+                          <td>{data.areaOfProperty}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">Open plot(count):</td>
+                          <td>{data.openPlot}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">Building(count):</td>
+                          <td>{data.building}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">Ground(count):</td>
+                          <td>{data.ground}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">No Property Found(count):</td>
+                          <td>{data.noProperty}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"}
+                          </td>
+                          <td>{data.addressLine1}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"}
+                          </td>
+                          <td>{data.addressLine2}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "District" : "जिल्हा"}
+                          </td>
+                          <td>{data.district}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "City" : "शहर"}
+                          </td>
+                          <td>{data.city}</td>
+                        </tr>
+                        <tr>
+                          <td className="viewTab">
+                            {lang == 0 ? "Pincode" : "पिन कोड"}
+                          </td>
+                          <td>{data.pincode}</td>
+                        </tr>
 
-                <div className="propViewTable">
-                  <table>
-                  <tbody>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Property name':'मालमत्तेचे नाव'}</td>
-                        <td >{data.propertyName}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'CTS - Survey Number':'सर्वेक्षण क्रमांक'}</td>
-                        <td >{data.cts}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Landmark':'महत्त्वाची खूण'}</td>
-                        <td >{data.landmark}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Location':'स्थान'}</td>
-                        <td >{data.location}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Area units':'क्षेत्र युनिट्स'}</td>
-                        <td >{data.areaUnits}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Area':'क्षेत्रफळ'}</td>
-                        <td >{data.areaOfProperty}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">Open plot(count):</td>
-                        <td >{data.openPlot}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">Building(count):</td>
-                        <td >{data.building}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">Ground(count):</td>
-                        <td >{data.ground}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">No Property Found(count):</td>
-                        <td >{data.noProperty}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Address Line 1':'पत्ता ओळ 1'}</td>
-                        <td >{data.addressLine1}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Address Line 2':'पत्ता ओळ 2'}</td>
-                        <td >{data.addressLine2}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'District':'जिल्हा'}</td>
-                        <td >{data.district}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'City':'शहर'}</td>
-                        <td >{data.city}</td> 
-                      </tr>
-                      <tr>
-                        <td className="viewTab">{lang==0?'Pincode':'पिन कोड'}</td>
-                        <td >{data.pincode}</td> 
-                      </tr>
-
-                      {/* <tr>
+                        {/* <tr>
                         <td>Property name: </td>
                         <td >Survey Number CTS</td> 
                       </tr>
@@ -1034,105 +1029,155 @@ console.log("token: " + token);
                         <td>Property name: </td>
                         <td >Survey Number CTS</td> 
                       </tr> */}
+                      </tbody>
+                    </table>
+                  </div>
 
-                      
-                   
-                    </tbody>
-                  </table>
-                </div>
-                  
+                  <div
+                    className="inputDataIndividualDiv"
+                    style={{ padding: "10px 0 0 10px" }}
+                  >
+                    {image && (
+                      <div style={{ marginBottom: "18px" }}>
+                        <label style={{ fontSize: "17px" }}>
+                          Uploaded Documents
+                          <span style={{ color: "red" }}></span>
+                        </label>
 
-                
-
-                   
-
-                  <div className="inputDataIndividualDiv" style={{padding:'10px 0 0 10px'}}>
-                  {image &&  
-
-                   <div style={{marginBottom:'18px'}}>
-                     <label style={{ fontSize: "17px"   }}>
-                        Uploaded Documents<span style={{ color: "red" }}></span>
-                    </label>
-                   
-                     
-                     <div className="viewUploadedDocs" style={{display:'flex',flexDirection:'column',marginTop:'7px' }}>
-                        {filesOnly.map((file, index) => (
-                          <div style={{display:'flex',justifyContent:'space-between',width:'60%'}}>
-                            <div>
-                          <button type="button" key={index} onClick={() => handleButtonClick(file.file)}
-                          style={{width:'100px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'1px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(15, 125, 53)' ,fontFamily:'inherit',fontWeight:'600'  }} 
-                          >
-                            View File 
-                            {/* {index + 1} */}
-                          </button> &nbsp;
-                          {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
+                        <div
+                          className="viewUploadedDocs"
+                          style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            marginTop: "7px",
+                          }}
+                        >
+                          {filesOnly.map((file, index) => (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "space-between",
+                                width: "60%",
+                              }}
+                            >
+                              <div>
+                                <button
+                                  type="button"
+                                  key={index}
+                                  onClick={() => handleButtonClick(file.file)}
+                                  style={{
+                                    width: "100px",
+                                    marginBottom: "10px",
+                                    height: "32px",
+                                    fontSize: "14px",
+                                    fontWeight: "500",
+                                    letterSpacing: "1px",
+                                    textTransform: "Capitalize",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "3px",
+                                    background: "rgb(15, 125, 53)",
+                                    fontFamily: "inherit",
+                                    fontWeight: "600",
+                                  }}
+                                >
+                                  View File
+                                  {/* {index + 1} */}
+                                </button>{" "}
+                                &nbsp;
+                                {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
                           style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
                           >
                             X
                           </button> */}
-                          &nbsp;
-                          <label style={{fontSize:'14px',textTransform:'uppercase'}}>{file.filename}</label>
-                          </div>
-
-                          <div>
-                           </div>
-                          
-                          {/* <button>Remove</button> */}
-                          </div>
-                           
-                           
-                        ))}
-
-                        {selectedFileImage && (
-                            <div className="modal-overlay">
-                            <div className="modal-content">
-                              <div className="modal-header">
-                                {/* <h5 className="modal-title">File</h5> */}
-                                 <button className="modal-close" onClick={handleModalClose} style={{background:'gray',color:'white',borderRadius:'2px'}}> 
-                                  &times;
-                                </button>  
+                                &nbsp;
+                                <label
+                                  style={{
+                                    fontSize: "14px",
+                                    textTransform: "uppercase",
+                                  }}
+                                >
+                                  {file.filename}
+                                </label>
                               </div>
-                              <div className="modal-body">
-                              <img style={{maxWidth: '100%',maxHeight:'70vh'}} src={selectedFileImage} alt="Selected" />
+
+                              <div></div>
+
+                              {/* <button>Remove</button> */}
+                            </div>
+                          ))}
+
+                          {selectedFileImage && (
+                            <div className="modal-overlay">
+                              <div className="modal-content">
+                                <div className="modal-header">
+                                  {/* <h5 className="modal-title">File</h5> */}
+                                  <button
+                                    className="modal-close"
+                                    onClick={handleModalClose}
+                                    style={{
+                                      background: "gray",
+                                      color: "white",
+                                      borderRadius: "2px",
+                                    }}
+                                  >
+                                    &times;
+                                  </button>
+                                </div>
+                                <div className="modal-body">
+                                  <img
+                                    style={{
+                                      maxWidth: "100%",
+                                      maxHeight: "70vh",
+                                    }}
+                                    src={selectedFileImage}
+                                    alt="Selected"
+                                  />
+                                </div>
                               </div>
                             </div>
-                          </div>
-                        )}
-
+                          )}
+                        </div>
                       </div>
-                     
-                     
-                    </div>  
-                   } 
+                    )}
                   </div>
 
-
-                  <div className="inputDataIndividualDiv"  style={{padding:'0',justifyContent:'center',display:'flex' ,alignItems:'center'  }}  >
-                  <button type="button"  onClick={() => handleEditClick(data.propertyId)}
-                          style={{width:'100px', 
-                          marginBottom:'10px',
-                          height:'32px',fontSize:'14px', 
-                          fontWeight:'500',letterSpacing:'1px', 
-                          textTransform:'Capitalize',color:"white",
-                          border:'none',borderRadius:'3px',background:'#673ab7' ,
-                          fontFamily:'inherit',fontWeight:'600',alignItems:'center'  }} 
-                          >
-                            EDIT
-                            {/* {index + 1} */}
-                          </button> &nbsp;
+                  <div
+                    className="inputDataIndividualDiv"
+                    style={{
+                      padding: "0",
+                      justifyContent: "center",
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() => handleEditClick(data.propertyId)}
+                      style={{
+                        width: "100px",
+                        marginBottom: "10px",
+                        height: "32px",
+                        fontSize: "14px",
+                        fontWeight: "500",
+                        letterSpacing: "1px",
+                        textTransform: "Capitalize",
+                        color: "white",
+                        border: "none",
+                        borderRadius: "3px",
+                        background: "#673ab7",
+                        fontFamily: "inherit",
+                        fontWeight: "600",
+                        alignItems: "center",
+                      }}
+                    >
+                      EDIT
+                      {/* {index + 1} */}
+                    </button>{" "}
+                    &nbsp;
                   </div>
-                  
-
-                   
-
-                   
                 </div>
-                
-
-                
               </div>
-
-             
             </div>
           </form>
         </div>

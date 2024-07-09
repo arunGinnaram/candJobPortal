@@ -35,7 +35,7 @@ const About = (props) => {
       return cfg;
     },
     (err) => {
-      console.error("Axios Err" + err);
+      console.error(err);
       return Promise.reject(err);
     }
   );
@@ -114,12 +114,12 @@ const About = (props) => {
           });
         } else {
           // alert(loginUrl.data.userId + "::" + loginUrl.data.roleId);
-          const userId =  loginUrl.data.userId;
+          const userId = loginUrl.data.userId;
           const roleId = loginUrl.data.roleId;
           const userName = loginUrl.data.roleId;
           const lastName = loginUrl.data.lastName;
           const firstName = loginUrl.data.firstName;
-           const profileImage = loginUrl.data.userProfileImage;
+          const profileImage = loginUrl.data.userProfileImage;
           Swal.fire({
             position: "top-end",
             width: "auto",
@@ -141,13 +141,13 @@ const About = (props) => {
             },
           });
           console.log(JSON.stringify(loginUrl));
-           sessionStorage.setItem("userId",userId);
-           sessionStorage.setItem("firstName",firstName);
-           sessionStorage.setItem("lastName",lastName);
-           sessionStorage.setItem("roleId",roleId);
-           sessionStorage.setItem("profileImage",profileImage);
+          sessionStorage.setItem("userId", userId);
+          sessionStorage.setItem("firstName", firstName);
+          sessionStorage.setItem("lastName", lastName);
+          sessionStorage.setItem("roleId", roleId);
+          sessionStorage.setItem("profileImage", profileImage);
           //  sessionStorage.setItem("userId",userId);
-          navigate("/UserMainPage",{ state:  userId  });
+          navigate("/UserMainPage", { state: userId });
         }
       } catch (error) {
         console.log("error : " + error);
@@ -210,7 +210,8 @@ const About = (props) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          alignItems: "center", background:'rgb(207 206 207)',
+          alignItems: "center",
+          background: "rgb(207 206 207)",
           // background:'var(--color-component-background)',
         }}
       >
@@ -233,7 +234,6 @@ const About = (props) => {
               fontWeight: "600",
               display: "flex",
               marginBottom: "5px",
-             
             }}
           >
             {1 == 1 ? (

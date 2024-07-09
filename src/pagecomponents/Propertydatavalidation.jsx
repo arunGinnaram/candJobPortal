@@ -44,8 +44,6 @@ const Propertydatavalidation = () => {
   const nodeRef = useRef(null);
   const nodeRef1 = useRef(null);
 
-
-
   const handlePropCreateBack = () => {
     navigate("/mumbaipolicestation/Properties");
   };
@@ -55,24 +53,20 @@ const Propertydatavalidation = () => {
     setValidatorBasic(!validatorBasic);
   };
 
-  const [validatorPlot,setValidatorPlot] = useState(false);
+  const [validatorPlot, setValidatorPlot] = useState(false);
   const handleValidatorPlot = () => {
     setValidatorPlot(!validatorPlot);
-  }
+  };
 
-  const [validatorBuilding,setValidatorBuilding] = useState(false);
+  const [validatorBuilding, setValidatorBuilding] = useState(false);
   const handleValidatorBuilding = () => {
     setValidatorBuilding(!validatorBuilding);
-  }
+  };
 
-  
-
-  const [validatorGround,setValidatorGround] = useState(false);
+  const [validatorGround, setValidatorGround] = useState(false);
   const handleValidatorGround = () => {
     setValidatorGround(!validatorGround);
-  }
-
-
+  };
 
   const { lang, setLang } = useContext(languageContext);
 
@@ -91,7 +85,7 @@ const Propertydatavalidation = () => {
       return cfg;
     },
     (err) => {
-      console.error("Axios Err" + err);
+      console.error(err);
       return Promise.reject(err);
     }
   );
@@ -1136,13 +1130,7 @@ const Propertydatavalidation = () => {
               alignItems: "center",
             }}
           >
-            <div style={{ display: "flex", alignItems: "center" }}>
-               
-               
-              
-              
-              
-            </div>
+            <div style={{ display: "flex", alignItems: "center" }}></div>
 
             <div
               className="createPropInputStyle"
@@ -1155,10 +1143,10 @@ const Propertydatavalidation = () => {
                 style={{
                   fontWeight: "600",
                   color: "white",
-                  fontSize:'15px',
+                  fontSize: "15px",
                   // background: "#E50000",
                   background: "#03A9F4",
-                  background:'rgb(141, 125, 112)',
+                  background: "rgb(141, 125, 112)",
                   border: "none",
                   borderRadius: "3px",
                   padding: "6px 14px",
@@ -1170,20 +1158,18 @@ const Propertydatavalidation = () => {
                 }}
                 type="button"
               />
-               
               &nbsp;
-
-            <input
+              <input
                 className="createPropInputsStyles"
                 value={lang == 0 ? "Matching" : "जुळणारे"}
                 // onClick={CreateNewProp}
                 style={{
                   fontWeight: "600",
                   color: "white",
-                  fontSize:'15px',
+                  fontSize: "15px",
                   // background: "#E50000",
                   background: "#66c229",
-                  background:'rgb(141, 125, 112)',
+                  background: "rgb(141, 125, 112)",
                   border: "none",
                   borderRadius: "3px",
                   padding: "6px 14px",
@@ -1195,7 +1181,6 @@ const Propertydatavalidation = () => {
                 }}
                 type="button"
               />
-               
               &nbsp;
               <input
                 className="createPropInputsStyles"
@@ -1204,10 +1189,10 @@ const Propertydatavalidation = () => {
                 style={{
                   fontWeight: "600",
                   color: "white",
-                  fontSize:'15px',
+                  fontSize: "15px",
                   // background: "#E50000",
                   background: "#ab0707",
-                  background:'rgb(141, 125, 112)',
+                  background: "rgb(141, 125, 112)",
                   border: "none",
                   borderRadius: "3px",
                   padding: "6px 9px",
@@ -1219,51 +1204,1350 @@ const Propertydatavalidation = () => {
                 }}
                 type="button"
               />
-               
             </div>
           </div>
-           
+
+          <div
+            style={{
+              height: "auto",
+              display: "flex",
+              justifyContent: "space-between",
+              marginTop: "1%",
+              flexDirection: "row",
+            }}
+          >
             <div
-              style={{
-                height: "auto",
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: "1%",
-                flexDirection: "row",
-              }}
+              className="Subdiv1"
+              style={{ width: "47%", boxSizing: "border-box" }}
             >
               <div
-                className="Subdiv1"
-                style={{ width: "47%", boxSizing: "border-box" }}
+                style={{
+                  background: "#8d7d70",
+                  padding: "6px 20px",
+                  fontWeight: "600",
+                  letterSpacing: "0.7px",
+                  color: "white",
+                  fontSize: "20px",
+                }}
               >
+                {lang == 0 ? (
+                  <span>
+                    O
+                    <span className="innerText" style={{ fontSize: "15px" }}>
+                      FFICE DATA
+                    </span>
+                  </span>
+                ) : (
+                  <span style={{ fontSize: "18px" }}>कार्यालय डेटा</span>
+                )}
+              </div>
+              <div style={{ background: "white", padding: "2% 0 0 4%" }}>
+                <div className="inputDataIndividualDiv">
+                  <label id="propertyNameLabel">
+                    {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
+                    <span style={{ color: "red" }}></span>
+                  </label>
+                  <input readOnly value={data.propertyName} />
+                </div>
+                <br></br>
+
+                <div className="inputDataIndividualDiv">
+                  <label>
+                    {lang == 0 ? "CTS - Survey Number" : "सर्वेक्षण क्रमांक"}
+                    <span style={{ color: "red" }}></span>
+                  </label>
+                  <input readOnly value={data.cts} />
+                </div>
+                <br></br>
+
+                <div className="inputDataIndividualDiv">
+                  <label>
+                    {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
+                    <span style={{ color: "red" }}></span>
+                  </label>
+                  <input
+                    readOnly
+                    name="landmark"
+                    id="landmark"
+                    value={data.landmark}
+                    onChange={handleChange}
+                  />
+                </div>
+                <br></br>
+
+                <div className="inputDataIndividualDiv">
+                  <label>
+                    {lang == 0 ? "Location" : "स्थान"}
+                    <span style={{ color: "red" }}></span>
+                  </label>
+                  <input
+                    readOnly
+                    name="landmark"
+                    id="landmark"
+                    value={data.location}
+                    onChange={handleChange}
+                  />
+                </div>
+                <br></br>
+
+                <div className="inputDataIndividualDiv">
+                  <label>
+                    {lang == 0 ? "Area" : "क्षेत्रफळ"}
+                    <span style={{ color: "red" }}></span>
+                  </label>
+                  <input readOnly value={data.areaUnits} />
+                  <input
+                    readOnly
+                    value={data.areaOfProperty}
+                    placeholder="Area"
+                  />{" "}
+                </div>
+
+                <div className="inputDataIndividualDiv">
+                  <div className="propertyImages"></div>
+
+                  <br></br>
+
+                  <div
+                    className="inputDataIndividualDiv addres1"
+                    style={{ marginBottom: "14px" }}
+                  >
+                    <label>
+                      {lang == 0 ? "Address" : "पत्ता"}
+                      <span style={{ color: "red" }}>*</span>
+                    </label>
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        alignItems: "center",
+                        marginTop: "2px",
+                      }}
+                    >
+                      <input
+                        style={{ width: "90%" }}
+                        value={data.addressLine1}
+                        placeholder={
+                          lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="inputDataIndividualDiv addres1"
+                    style={{ marginBottom: "14px" }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        alignItems: "center",
+                      }}
+                    >
+                      <input
+                        style={{ width: "90%" }}
+                        value={data.addressLine2}
+                        placeholder={
+                          lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="inputDataIndividualDiv addres1"
+                    style={{ marginBottom: "14px" }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        alignItems: "center",
+                      }}
+                    >
+                      <input
+                        style={{ width: "90%" }}
+                        value={data.district}
+                        // placeholder="District"
+                        placeholder={lang == 0 ? "District" : "जिल्हा"}
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="inputDataIndividualDiv addres1"
+                    style={{ marginBottom: "14px" }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        alignItems: "center",
+                      }}
+                    >
+                      <input
+                        style={{ width: "90%" }}
+                        value={data.city}
+                        // placeholder="City"
+                        placeholder={lang == 0 ? "City" : "शहर"}
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    className="inputDataIndividualDiv addres1"
+                    style={{ marginBottom: "14px" }}
+                  >
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                        width: "100%",
+                        alignItems: "center",
+                      }}
+                    >
+                      <input
+                        style={{ width: "90%" }}
+                        value={data.pincode}
+                        placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div
                   style={{
-                    background: "#8d7d70",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "16px",
+                    paddingTop: "12px",
+                    paddingRight: "10px",
+                    paddingBottom: "8px",
+                    borderBottom: "1px solid #e1dfdf",
+                    alignItems: "center",
+                    width: "90%",
+                  }}
+                >
+                  <div
+                    className="SelectProps"
+                    style={{ color: "#535151", fontWeight: "600" }}
+                  >
+                    Open/Empty Plot(count):
+                  </div>
+                  <span
+                    style={{
+                      color: "#06a706",
+                      background: "#e5e5e5",
+                      padding: "5px 10px",
+                    }}
+                  >
+                    {data.openPlot}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "16px",
+                    paddingTop: "12px",
+                    paddingRight: "10px",
+                    paddingBottom: "8px",
+                    borderBottom: "1px solid #e1dfdf",
+                    alignItems: "center",
+                    width: "90%",
+                  }}
+                >
+                  <div
+                    className="SelectProps"
+                    style={{ color: "#535151", fontWeight: "600" }}
+                  >
+                    Building(count):
+                  </div>
+                  <span
+                    style={{
+                      color: "#06a706",
+                      background: "#e5e5e5",
+                      padding: "5px 10px",
+                    }}
+                  >
+                    {data.building}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "16px",
+                    paddingTop: "12px",
+                    paddingRight: "10px",
+                    paddingBottom: "8px",
+                    borderBottom: "1px solid #e1dfdf",
+                    alignItems: "center",
+                    width: "90%",
+                  }}
+                >
+                  <div
+                    className="SelectProps"
+                    style={{ color: "#535151", fontWeight: "600" }}
+                  >
+                    Ground(count):
+                  </div>
+                  <span
+                    style={{
+                      color: "#06a706",
+                      background: "#e5e5e5",
+                      padding: "5px 10px",
+                    }}
+                  >
+                    {" "}
+                    {data.ground}
+                  </span>
+                </div>
+
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    fontSize: "16px",
+                    paddingTop: "12px",
+                    paddingRight: "10px",
+                    paddingBottom: "8px",
+                    borderBottom: "1px solid #e1dfdf",
+                    alignItems: "center",
+                    width: "90%",
+                  }}
+                >
+                  <div
+                    className="SelectProps"
+                    style={{ color: "#535151", fontWeight: "600" }}
+                  >
+                    NA: No Property Found(count):
+                  </div>
+                  <span
+                    style={{
+                      color: "#06a706",
+                      background: "#e5e5e5",
+                      padding: "5px 10px",
+                    }}
+                  >
+                    {" "}
+                    {data.noProperty}
+                  </span>
+                </div>
+
+                <br></br>
+
+                <div className="inputDataIndividualDiv">
+                  {image && (
+                    <div style={{ marginBottom: "18px" }}>
+                      <label style={{ fontSize: "17px" }}>
+                        Property Documents
+                        <span style={{ color: "red" }}></span>
+                      </label>
+
+                      <div
+                        className="viewUploadedDocs"
+                        style={{
+                          display: "flex",
+                          flexDirection: "column",
+                          marginTop: "7px",
+                        }}
+                      >
+                        {filesOnly.map((file, index) => (
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              width: "60%",
+                            }}
+                          >
+                            <div>
+                              <button
+                                type="button"
+                                key={index}
+                                onClick={() => handleButtonClick(file.file)}
+                                style={{
+                                  width: "100px",
+                                  marginBottom: "10px",
+                                  height: "32px",
+                                  fontSize: "12px",
+                                  fontWeight: "500",
+                                  letterSpacing: "0.4px",
+                                  textTransform: "Capitalize",
+                                  color: "white",
+                                  border: "none",
+                                  borderRadius: "3px",
+                                  background: "rgb(15, 125, 53)",
+                                  fontFamily: "inherit",
+                                  fontWeight: "600",
+                                }}
+                              >
+                                View File
+                                {/* {index + 1} */}
+                              </button>{" "}
+                              &nbsp;
+                              {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
+                          style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
+                          >
+                            X
+                          </button> */}
+                              &nbsp;
+                              <label
+                                style={{
+                                  fontSize: "14px",
+                                  textTransform: "uppercase",
+                                }}
+                              >
+                                {file.filename}
+                              </label>
+                            </div>
+
+                            <div></div>
+                          </div>
+                        ))}
+
+                        {selectedFileImage && (
+                          <div className="modal-overlay">
+                            <div className="modal-content">
+                              <div className="modal-header">
+                                <button
+                                  className="modal-close"
+                                  onClick={handleModalClose}
+                                  style={{
+                                    background: "gray",
+                                    color: "white",
+                                    borderRadius: "2px",
+                                  }}
+                                >
+                                  &times;
+                                </button>
+                              </div>
+                              <div className="modal-body">
+                                <img
+                                  style={{
+                                    maxWidth: "100%",
+                                    maxHeight: "70vh",
+                                  }}
+                                  src={selectedFileImage}
+                                  alt="Selected"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div
+              className="Subdiv1"
+              style={{ width: "47%", boxSizing: "border-box" }}
+            >
+              <div
+                style={{
+                  background: "#8d7d70",
+                  padding: "6px 20px",
+                  fontWeight: "600",
+                  letterSpacing: "0.7px",
+                  color: "white",
+                  fontSize: "20px",
+                }}
+              >
+                {lang == 0 ? (
+                  <span>
+                    V
+                    <span className="innerText" style={{ fontSize: "15px" }}>
+                      ALIDATOR DATA
+                    </span>
+                  </span>
+                ) : (
+                  <span style={{ fontSize: "18px" }}>सत्यापनकर्ता डेटा</span>
+                )}
+              </div>
+
+              <div style={{ background: "white" }}>
+                <br></br>
+              </div>
+              <div
+                onClick={handleValidatorBasic}
+                className="basicDiv"
+                style={{
+                  background: "white",
+                  padding: "20px 20px",
+                  fontWeight: "600",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  className="basicDiv1"
+                  style={{
+                    width: "250px",
+                    background: "rgb(83 115 131)",
+                    padding: "6px 20px",
+                    fontWeight: "600",
+                    letterSpacing: "0.7px",
+                    color: "white",
+                    fontSize: "14px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "3px",
+                    fontSize: "16px",
+                    textAlign: "center",
+                  }}
+                >
+                  {lang == 0 ? (
+                    <span>
+                      <span style={{ fontSize: "17px" }}>V</span>
+                      <span style={{ fontSize: "14px" }}>IEW BASIC</span>
+                    </span>
+                  ) : (
+                    "मूलभूत पहा"
+                  )}
+                </div>
+              </div>
+
+              <CSSTransition
+                in={validatorBasic}
+                nodeRef={nodeRef}
+                timeout={300}
+                classNames="alert"
+                unmountOnExit
+              >
+                <div ref={nodeRef} className="validatorBasic">
+                  <div style={{ background: "white", padding: "2% 0 0 4%" }}>
+                    <div className="inputDataIndividualDiv">
+                      <label id="propertyNameLabel">
+                        {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <input
+                        readOnly
+                        color="inherit"
+                        name="propertyName"
+                        id="propertyName"
+                        value={data.propertyName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0
+                          ? "CTS - Survey Number"
+                          : "सर्वेक्षण क्रमांक"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <input
+                        color="inherit"
+                        name="cts"
+                        id="cts"
+                        value={data.cts}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <input
+                        name="landmark"
+                        id="landmark"
+                        value={data.landmark}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0 ? "Location" : "स्थान"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <select
+                        name="location"
+                        id="location"
+                        style={{
+                          width: "91%",
+                          fontWeight: "400",
+                          color: "#737373",
+                          boxSizing: "border-box",
+                          outline: "none",
+
+                          border: "none",
+                          background: "#e5e5e5",
+                          borderRadius: "3px",
+                          fontFamily: "inherit",
+                          letterSpacing: "0.5px",
+                        }}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select location</option>
+                        <option value="MADHAPUR">MADHAPUR</option>
+                        <option value="HITECHCITY">HITECHCITY</option>
+                        <option value="GACHIBOWLI">GACHIBOWLI</option>
+                      </select>
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0 ? "Area" : "क्षेत्रफळ"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <select
+                        id="areaUnits"
+                        name="areaUnits"
+                        style={{
+                          width: "91%",
+                          fontWeight: "400",
+                          color: "#737373",
+                          boxSizing: "border-box",
+                          outline: "none",
+
+                          border: "none",
+                          background: "#e5e5e5",
+                          borderRadius: "3px",
+                          fontFamily: "inherit",
+                          letterSpacing: "0.5px",
+                        }}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Area Units(Sqr ft.)</option>
+                        <option value="SQR_FT.">SQR FT.</option>
+                        <option value="SQR_YARD">SQR YARD</option>
+                        <option value="MT_SQR.">MT SQR</option>
+                      </select>
+
+                      <div className="propertyImages">
+                        <input
+                          name="areaOfProperty"
+                          id="areaOfProperty"
+                          value={data.areaOfProperty}
+                          onChange={handleChange}
+                          pattern="[0-9]*[.]?[0-9]*"
+                          title="Please enter a valid numeric value"
+                          placeholder="Area"
+                        />{" "}
+                      </div>
+
+                      <br></br>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <label>
+                          {lang == 0 ? "Address" : "पत्ता"}
+                          <span style={{ color: "red" }}></span>
+                        </label>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                            marginTop: "2px",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="addressLine1"
+                            id="addressLine1"
+                            value={data.addressLine1}
+                            onChange={handleChange}
+                            placeholder={
+                              lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="addressLine2"
+                            id="addressLine2"
+                            value={data.addressLine2}
+                            onChange={handleChange}
+                            placeholder={
+                              lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="district"
+                            id="district"
+                            value={data.district}
+                            onChange={handleChange}
+                            // placeholder="District"
+                            placeholder={lang == 0 ? "District" : "जिल्हा"}
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="city"
+                            id="city"
+                            value={data.city}
+                            onChange={handleChange}
+                            // placeholder="City"
+                            placeholder={lang == 0 ? "City" : "शहर"}
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="pincode"
+                            id="pincode"
+                            value={data.pincode}
+                            onChange={handleChange}
+                            placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
+                            pattern="[0-9]*"
+                            title="Please enter a valid numeric value"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <br></br>
+                    <div className="inputDataIndividualDiv">
+                      {image && (
+                        <div style={{ marginBottom: "18px" }}>
+                          <label style={{ fontSize: "17px" }}>
+                            Property Documents
+                            <span style={{ color: "red" }}></span>
+                          </label>
+
+                          <div
+                            className="viewUploadedDocs"
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "7px",
+                            }}
+                          >
+                            {filesOnly.map((file, index) => (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  width: "60%",
+                                }}
+                              >
+                                <div>
+                                  <button
+                                    type="button"
+                                    key={index}
+                                    onClick={() => handleButtonClick(file.file)}
+                                    style={{
+                                      width: "100px",
+                                      marginBottom: "10px",
+                                      height: "32px",
+                                      fontSize: "12px",
+                                      fontWeight: "500",
+                                      letterSpacing: "0.4px",
+                                      textTransform: "Capitalize",
+                                      color: "white",
+                                      border: "none",
+                                      borderRadius: "3px",
+                                      background: "rgb(15, 125, 53)",
+                                      fontFamily: "inherit",
+                                      fontWeight: "600",
+                                    }}
+                                  >
+                                    View File
+                                    {/* {index + 1} */}
+                                  </button>{" "}
+                                  &nbsp;
+                                  {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
+                              style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
+                              >
+                                X
+                              </button> */}
+                                  &nbsp;
+                                  <label
+                                    style={{
+                                      fontSize: "14px",
+                                      textTransform: "uppercase",
+                                    }}
+                                  >
+                                    {file.filename}
+                                  </label>
+                                </div>
+
+                                <div></div>
+                              </div>
+                            ))}
+
+                            {selectedFileImage && (
+                              <div className="modal-overlay">
+                                <div className="modal-content">
+                                  <div className="modal-header">
+                                    <button
+                                      className="modal-close"
+                                      onClick={handleModalClose}
+                                      style={{
+                                        background: "gray",
+                                        color: "white",
+                                        borderRadius: "2px",
+                                      }}
+                                    >
+                                      &times;
+                                    </button>
+                                  </div>
+                                  <div className="modal-body">
+                                    <img
+                                      style={{
+                                        maxWidth: "100%",
+                                        maxHeight: "70vh",
+                                      }}
+                                      src={selectedFileImage}
+                                      alt="Selected"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CSSTransition>
+
+              <div
+                onClick={handleValidatorPlot}
+                className="basicDiv"
+                style={{
+                  background: "white",
+                  padding: "20px 20px",
+                  fontWeight: "600",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  className="basicDiv1"
+                  style={{
+                    width: "250px",
+                    background: "rgb(83 115 131)",
+                    padding: "6px 20px",
+                    fontWeight: "600",
+                    letterSpacing: "0.7px",
+                    color: "white",
+                    fontSize: "15px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "3px",
+                    fontSize: "16px",
+                    textAlign: "center",
+                  }}
+                >
+                  {lang == 0 ? (
+                    <span>
+                      <span style={{ fontSize: "18px" }}>V</span>
+                      <span style={{ fontSize: "14px" }}>IEW PLOT</span>
+                    </span>
+                  ) : (
+                    "प्लॉट पहा"
+                  )}
+                </div>
+              </div>
+
+              <CSSTransition
+                in={validatorPlot}
+                nodeRef={nodeRef1}
+                classNames="alert"
+                timeout={300}
+                unmountOnExit
+              >
+                <div ref={nodeRef1} className="validatorPlot">
+                  <div style={{ background: "white", padding: "2% 0 0 4%" }}>
+                    <div className="inputDataIndividualDiv">
+                      <label id="propertyNameLabel">
+                        {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <input
+                        readOnly
+                        color="inherit"
+                        name="propertyName"
+                        id="propertyName"
+                        value={data.propertyName}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0
+                          ? "CTS - Survey Number"
+                          : "सर्वेक्षण क्रमांक"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <input
+                        color="inherit"
+                        name="cts"
+                        id="cts"
+                        value={data.cts}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <input
+                        name="landmark"
+                        id="landmark"
+                        value={data.landmark}
+                        onChange={handleChange}
+                      />
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0 ? "Location" : "स्थान"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <select
+                        name="location"
+                        id="location"
+                        style={{
+                          width: "91%",
+                          fontWeight: "400",
+                          color: "#737373",
+                          boxSizing: "border-box",
+                          outline: "none",
+
+                          border: "none",
+                          background: "#e5e5e5",
+                          borderRadius: "3px",
+                          fontFamily: "inherit",
+                          letterSpacing: "0.5px",
+                        }}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select location</option>
+                        <option value="MADHAPUR">MADHAPUR</option>
+                        <option value="HITECHCITY">HITECHCITY</option>
+                        <option value="GACHIBOWLI">GACHIBOWLI</option>
+                      </select>
+                    </div>
+                    <br></br>
+
+                    <div className="inputDataIndividualDiv">
+                      <label>
+                        {lang == 0 ? "Area" : "क्षेत्रफळ"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <select
+                        id="areaUnits"
+                        name="areaUnits"
+                        style={{
+                          width: "91%",
+                          fontWeight: "400",
+                          color: "#737373",
+                          boxSizing: "border-box",
+                          outline: "none",
+
+                          border: "none",
+                          background: "#e5e5e5",
+                          borderRadius: "3px",
+                          fontFamily: "inherit",
+                          letterSpacing: "0.5px",
+                        }}
+                        onChange={handleChange}
+                      >
+                        <option value="">Select Area Units(Sqr ft.)</option>
+                        <option value="SQR_FT.">SQR FT.</option>
+                        <option value="SQR_YARD">SQR YARD</option>
+                        <option value="MT_SQR.">MT SQR</option>
+                      </select>
+
+                      <div className="propertyImages">
+                        <input
+                          name="areaOfProperty"
+                          id="areaOfProperty"
+                          value={data.areaOfProperty}
+                          onChange={handleChange}
+                          pattern="[0-9]*[.]?[0-9]*"
+                          title="Please enter a valid numeric value"
+                          placeholder="Area"
+                        />{" "}
+                      </div>
+
+                      <br></br>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <label>
+                          {lang == 0 ? "Address" : "पत्ता"}
+                          <span style={{ color: "red" }}></span>
+                        </label>
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                            marginTop: "2px",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="addressLine1"
+                            id="addressLine1"
+                            value={data.addressLine1}
+                            onChange={handleChange}
+                            placeholder={
+                              lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="addressLine2"
+                            id="addressLine2"
+                            value={data.addressLine2}
+                            onChange={handleChange}
+                            placeholder={
+                              lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
+                            }
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="district"
+                            id="district"
+                            value={data.district}
+                            onChange={handleChange}
+                            // placeholder="District"
+                            placeholder={lang == 0 ? "District" : "जिल्हा"}
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="city"
+                            id="city"
+                            value={data.city}
+                            onChange={handleChange}
+                            // placeholder="City"
+                            placeholder={lang == 0 ? "City" : "शहर"}
+                          />
+                        </div>
+                      </div>
+
+                      <div
+                        className="inputDataIndividualDiv addre"
+                        style={{ marginBottom: "14px" }}
+                      >
+                        <div
+                          style={{
+                            display: "flex",
+                            justifyContent: "space-between",
+                            width: "100%",
+                            alignItems: "center",
+                          }}
+                        >
+                          <input
+                            style={{ width: "90%" }}
+                            name="pincode"
+                            id="pincode"
+                            value={data.pincode}
+                            onChange={handleChange}
+                            placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
+                            pattern="[0-9]*"
+                            title="Please enter a valid numeric value"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <br></br>
+                    <div className="inputDataIndividualDiv">
+                      {image && (
+                        <div style={{ marginBottom: "18px" }}>
+                          <label style={{ fontSize: "17px" }}>
+                            Property Documents
+                            <span style={{ color: "red" }}></span>
+                          </label>
+
+                          <div
+                            className="viewUploadedDocs"
+                            style={{
+                              display: "flex",
+                              flexDirection: "column",
+                              marginTop: "7px",
+                            }}
+                          >
+                            {filesOnly.map((file, index) => (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "space-between",
+                                  width: "60%",
+                                }}
+                              >
+                                <div>
+                                  <button
+                                    type="button"
+                                    key={index}
+                                    onClick={() => handleButtonClick(file.file)}
+                                    style={{
+                                      width: "100px",
+                                      marginBottom: "10px",
+                                      height: "32px",
+                                      fontSize: "12px",
+                                      fontWeight: "500",
+                                      letterSpacing: "0.4px",
+                                      textTransform: "Capitalize",
+                                      color: "white",
+                                      border: "none",
+                                      borderRadius: "3px",
+                                      background: "rgb(15, 125, 53)",
+                                      fontFamily: "inherit",
+                                      fontWeight: "600",
+                                    }}
+                                  >
+                                    View File
+                                    {/* {index + 1} */}
+                                  </button>{" "}
+                                  &nbsp;
+                                  {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
+                              style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
+                              >
+                                X
+                              </button> */}
+                                  &nbsp;
+                                  <label
+                                    style={{
+                                      fontSize: "14px",
+                                      textTransform: "uppercase",
+                                    }}
+                                  >
+                                    {file.filename}
+                                  </label>
+                                </div>
+
+                                <div></div>
+                              </div>
+                            ))}
+
+                            {selectedFileImage && (
+                              <div className="modal-overlay">
+                                <div className="modal-content">
+                                  <div className="modal-header">
+                                    <button
+                                      className="modal-close"
+                                      onClick={handleModalClose}
+                                      style={{
+                                        background: "gray",
+                                        color: "white",
+                                        borderRadius: "2px",
+                                      }}
+                                    >
+                                      &times;
+                                    </button>
+                                  </div>
+                                  <div className="modal-body">
+                                    <img
+                                      style={{
+                                        maxWidth: "100%",
+                                        maxHeight: "70vh",
+                                      }}
+                                      src={selectedFileImage}
+                                      alt="Selected"
+                                    />
+                                  </div>
+                                </div>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </CSSTransition>
+
+              <div
+                onClick={handleValidatorBuilding}
+                className="basicDiv"
+                style={{
+                  background: "white",
+                  padding: "20px 20px",
+                  fontWeight: "600",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
+                <div
+                  className="basicDiv1"
+                  style={{
+                    width: "250px",
+                    background: "rgb(83 115 131)",
                     padding: "6px 20px",
                     fontWeight: "600",
                     letterSpacing: "0.7px",
                     color: "white",
                     fontSize: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "3px",
+                    fontSize: "16px",
+                    textAlign: "center",
                   }}
                 >
                   {lang == 0 ? (
                     <span>
-                      O
-                      <span className="innerText" style={{ fontSize: "15px" }}>
-                        FFICE DATA
-                      </span>
+                      <span style={{ fontSize: "18px" }}>V</span>
+                      <span style={{ fontSize: "14px" }}>IEW BUILDING</span>
                     </span>
                   ) : (
-                    <span style={{ fontSize: "18px" }}>कार्यालय डेटा</span>
+                    "इमारत पहा"
                   )}
                 </div>
+              </div>
+
+              <CSSTransition
+                in={validatorBuilding}
+                unmountOnExit
+                timeout={300}
+                classNames="alert"
+              >
                 <div style={{ background: "white", padding: "2% 0 0 4%" }}>
                   <div className="inputDataIndividualDiv">
                     <label id="propertyNameLabel">
                       {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
                       <span style={{ color: "red" }}></span>
                     </label>
-                    <input readOnly value={data.propertyName} />
+                    <input
+                      readOnly
+                      color="inherit"
+                      name="propertyName"
+                      id="propertyName"
+                      value={data.propertyName}
+                      onChange={handleChange}
+                    />
                   </div>
                   <br></br>
 
@@ -1272,7 +2556,13 @@ const Propertydatavalidation = () => {
                       {lang == 0 ? "CTS - Survey Number" : "सर्वेक्षण क्रमांक"}
                       <span style={{ color: "red" }}></span>
                     </label>
-                    <input readOnly value={data.cts} />
+                    <input
+                      color="inherit"
+                      name="cts"
+                      id="cts"
+                      value={data.cts}
+                      onChange={handleChange}
+                    />
                   </div>
                   <br></br>
 
@@ -1282,7 +2572,6 @@ const Propertydatavalidation = () => {
                       <span style={{ color: "red" }}></span>
                     </label>
                     <input
-                      readOnly
                       name="landmark"
                       id="landmark"
                       value={data.landmark}
@@ -1296,13 +2585,29 @@ const Propertydatavalidation = () => {
                       {lang == 0 ? "Location" : "स्थान"}
                       <span style={{ color: "red" }}></span>
                     </label>
-                    <input
-                      readOnly
-                      name="landmark"
-                      id="landmark"
-                      value={data.location}
+                    <select
+                      name="location"
+                      id="location"
+                      style={{
+                        width: "91%",
+                        fontWeight: "400",
+                        color: "#737373",
+                        boxSizing: "border-box",
+                        outline: "none",
+
+                        border: "none",
+                        background: "#e5e5e5",
+                        borderRadius: "3px",
+                        fontFamily: "inherit",
+                        letterSpacing: "0.5px",
+                      }}
                       onChange={handleChange}
-                    />
+                    >
+                      <option value="">Select location</option>
+                      <option value="MADHAPUR">MADHAPUR</option>
+                      <option value="HITECHCITY">HITECHCITY</option>
+                      <option value="GACHIBOWLI">GACHIBOWLI</option>
+                    </select>
                   </div>
                   <br></br>
 
@@ -1311,26 +2616,51 @@ const Propertydatavalidation = () => {
                       {lang == 0 ? "Area" : "क्षेत्रफळ"}
                       <span style={{ color: "red" }}></span>
                     </label>
-                    <input readOnly value={data.areaUnits} />
-                    <input
-                      readOnly
-                      value={data.areaOfProperty}
-                      placeholder="Area"
-                    />{" "}
-                  </div>
+                    <select
+                      id="areaUnits"
+                      name="areaUnits"
+                      style={{
+                        width: "91%",
+                        fontWeight: "400",
+                        color: "#737373",
+                        boxSizing: "border-box",
+                        outline: "none",
 
-                  <div className="inputDataIndividualDiv">
-                    <div className="propertyImages"></div>
+                        border: "none",
+                        background: "#e5e5e5",
+                        borderRadius: "3px",
+                        fontFamily: "inherit",
+                        letterSpacing: "0.5px",
+                      }}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Area Units(Sqr ft.)</option>
+                      <option value="SQR_FT.">SQR FT.</option>
+                      <option value="SQR_YARD">SQR YARD</option>
+                      <option value="MT_SQR.">MT SQR</option>
+                    </select>
+
+                    <div className="propertyImages">
+                      <input
+                        name="areaOfProperty"
+                        id="areaOfProperty"
+                        value={data.areaOfProperty}
+                        onChange={handleChange}
+                        pattern="[0-9]*[.]?[0-9]*"
+                        title="Please enter a valid numeric value"
+                        placeholder="Area"
+                      />{" "}
+                    </div>
 
                     <br></br>
 
                     <div
-                      className="inputDataIndividualDiv addres1"
+                      className="inputDataIndividualDiv addre"
                       style={{ marginBottom: "14px" }}
                     >
                       <label>
                         {lang == 0 ? "Address" : "पत्ता"}
-                        <span style={{ color: "red" }}>*</span>
+                        <span style={{ color: "red" }}></span>
                       </label>
                       <div
                         style={{
@@ -1343,7 +2673,10 @@ const Propertydatavalidation = () => {
                       >
                         <input
                           style={{ width: "90%" }}
+                          name="addressLine1"
+                          id="addressLine1"
                           value={data.addressLine1}
+                          onChange={handleChange}
                           placeholder={
                             lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
                           }
@@ -1352,7 +2685,7 @@ const Propertydatavalidation = () => {
                     </div>
 
                     <div
-                      className="inputDataIndividualDiv addres1"
+                      className="inputDataIndividualDiv addre"
                       style={{ marginBottom: "14px" }}
                     >
                       <div
@@ -1365,7 +2698,10 @@ const Propertydatavalidation = () => {
                       >
                         <input
                           style={{ width: "90%" }}
+                          name="addressLine2"
+                          id="addressLine2"
                           value={data.addressLine2}
+                          onChange={handleChange}
                           placeholder={
                             lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
                           }
@@ -1374,7 +2710,7 @@ const Propertydatavalidation = () => {
                     </div>
 
                     <div
-                      className="inputDataIndividualDiv addres1"
+                      className="inputDataIndividualDiv addre"
                       style={{ marginBottom: "14px" }}
                     >
                       <div
@@ -1387,7 +2723,10 @@ const Propertydatavalidation = () => {
                       >
                         <input
                           style={{ width: "90%" }}
+                          name="district"
+                          id="district"
                           value={data.district}
+                          onChange={handleChange}
                           // placeholder="District"
                           placeholder={lang == 0 ? "District" : "जिल्हा"}
                         />
@@ -1395,7 +2734,7 @@ const Propertydatavalidation = () => {
                     </div>
 
                     <div
-                      className="inputDataIndividualDiv addres1"
+                      className="inputDataIndividualDiv addre"
                       style={{ marginBottom: "14px" }}
                     >
                       <div
@@ -1408,7 +2747,10 @@ const Propertydatavalidation = () => {
                       >
                         <input
                           style={{ width: "90%" }}
+                          name="city"
+                          id="city"
                           value={data.city}
+                          onChange={handleChange}
                           // placeholder="City"
                           placeholder={lang == 0 ? "City" : "शहर"}
                         />
@@ -1416,7 +2758,7 @@ const Propertydatavalidation = () => {
                     </div>
 
                     <div
-                      className="inputDataIndividualDiv addres1"
+                      className="inputDataIndividualDiv addre"
                       style={{ marginBottom: "14px" }}
                     >
                       <div
@@ -1429,137 +2771,18 @@ const Propertydatavalidation = () => {
                       >
                         <input
                           style={{ width: "90%" }}
+                          name="pincode"
+                          id="pincode"
                           value={data.pincode}
+                          onChange={handleChange}
                           placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
+                          pattern="[0-9]*"
+                          title="Please enter a valid numeric value"
                         />
                       </div>
                     </div>
                   </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "16px",
-                      paddingTop: "12px",
-                      paddingRight: "10px",
-                      paddingBottom: "8px",
-                      borderBottom: "1px solid #e1dfdf",
-                      alignItems: "center",
-                      width: "90%",
-                    }}
-                  >
-                    <div
-                      className="SelectProps"
-                      style={{ color: "#535151", fontWeight: "600" }}
-                    >
-                      Open/Empty Plot(count):
-                    </div>
-                    <span
-                      style={{
-                        color: "#06a706",
-                        background: "#e5e5e5",
-                        padding: "5px 10px",
-                      }}
-                    >
-                      {data.openPlot}
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "16px",
-                      paddingTop: "12px",
-                      paddingRight: "10px",
-                      paddingBottom: "8px",
-                      borderBottom: "1px solid #e1dfdf",
-                      alignItems: "center",
-                      width: "90%",
-                    }}
-                  >
-                    <div
-                      className="SelectProps"
-                      style={{ color: "#535151", fontWeight: "600" }}
-                    >
-                      Building(count):
-                    </div>
-                    <span
-                      style={{
-                        color: "#06a706",
-                        background: "#e5e5e5",
-                        padding: "5px 10px",
-                      }}
-                    >
-                      {data.building}
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "16px",
-                      paddingTop: "12px",
-                      paddingRight: "10px",
-                      paddingBottom: "8px",
-                      borderBottom: "1px solid #e1dfdf",
-                      alignItems: "center",
-                      width: "90%",
-                    }}
-                  >
-                    <div
-                      className="SelectProps"
-                      style={{ color: "#535151", fontWeight: "600" }}
-                    >
-                      Ground(count):
-                    </div>
-                    <span
-                      style={{
-                        color: "#06a706",
-                        background: "#e5e5e5",
-                        padding: "5px 10px",
-                      }}
-                    >
-                      {" "}
-                      {data.ground}
-                    </span>
-                  </div>
-
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      fontSize: "16px",
-                      paddingTop: "12px",
-                      paddingRight: "10px",
-                      paddingBottom: "8px",
-                      borderBottom: "1px solid #e1dfdf",
-                      alignItems: "center",
-                      width: "90%",
-                    }}
-                  >
-                    <div
-                      className="SelectProps"
-                      style={{ color: "#535151", fontWeight: "600" }}
-                    >
-                      NA: No Property Found(count):
-                    </div>
-                    <span
-                      style={{
-                        color: "#06a706",
-                        background: "#e5e5e5",
-                        padding: "5px 10px",
-                      }}
-                    >
-                      {" "}
-                      {data.noProperty}
-                    </span>
-                  </div>
-
                   <br></br>
-
                   <div className="inputDataIndividualDiv">
                     {image && (
                       <div style={{ marginBottom: "18px" }}>
@@ -1610,10 +2833,10 @@ const Propertydatavalidation = () => {
                                 </button>{" "}
                                 &nbsp;
                                 {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
-                          style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
-                          >
-                            X
-                          </button> */}
+                              style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
+                              >
+                                X
+                              </button> */}
                                 &nbsp;
                                 <label
                                   style={{
@@ -1663,1647 +2886,413 @@ const Propertydatavalidation = () => {
                     )}
                   </div>
                 </div>
-              </div>
+              </CSSTransition>
 
               <div
-                className="Subdiv1"
-                style={{ width: "47%", boxSizing: "border-box" }}
+                onClick={handleValidatorGround}
+                className="basicDiv"
+                style={{
+                  background: "white",
+                  padding: "20px 20px",
+                  fontWeight: "600",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
               >
                 <div
+                  className="basicDiv1"
                   style={{
-                    background: "#8d7d70",
+                    width: "250px",
+                    background: "rgb(83 115 131)",
                     padding: "6px 20px",
                     fontWeight: "600",
                     letterSpacing: "0.7px",
                     color: "white",
                     fontSize: "20px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "3px",
+                    fontSize: "16px",
+                    textAlign: "center",
                   }}
                 >
                   {lang == 0 ? (
                     <span>
-                      V
-                      <span className="innerText" style={{ fontSize: "15px" }}>
-                        ALIDATOR DATA
-                      </span>
+                      <span style={{ fontSize: "18px" }}>V</span>
+                      <span style={{ fontSize: "14px" }}>IEW GROUND</span>
                     </span>
                   ) : (
-                    <span style={{ fontSize: "18px" }}>सत्यापनकर्ता डेटा</span>
+                    "ग्राउंड पहा"
                   )}
                 </div>
+              </div>
 
-                <div style={{background:'white'}}>
-                <br></br>
-                </div>
-                <div
-                 onClick={handleValidatorBasic}
-                className="basicDiv"
-                  style={{
-                    background: "white",
-                    padding: "20px 20px",
-                    fontWeight: "600",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                  className="basicDiv1"
-                    style={{
-                      width: "250px",
-                      background: "rgb(83 115 131)",
-                      padding: "6px 20px",
-                      fontWeight: "600",
-                      letterSpacing: "0.7px",
-                      color: "white",
-                      fontSize: "14px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: "3px",
-                      fontSize: "16px",
-                      textAlign: "center",
-                    }}
-                   
-                  >
-                    {lang == 0 ? <span><span style={{fontSize:'17px'}}>V</span><span style={{fontSize: "14px"}}>IEW BASIC</span></span>: "मूलभूत पहा"}
-                  </div>
-                </div>
-
-                <CSSTransition
-                  in={validatorBasic}
-                  nodeRef={nodeRef}
-                  timeout={300}
-                  classNames="alert"
-                  unmountOnExit
-                >
-                  <div  ref={nodeRef} className="validatorBasic">
-                    
-                    <div style={{ background: "white", padding: "2% 0 0 4%" }}>
-                      <div className="inputDataIndividualDiv">
-                        <label id="propertyNameLabel">
-                          {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          readOnly
-                          color="inherit"
-                          name="propertyName"
-                          id="propertyName"
-                          value={data.propertyName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0
-                            ? "CTS - Survey Number"
-                            : "सर्वेक्षण क्रमांक"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          color="inherit"
-                          name="cts"
-                          id="cts"
-                          value={data.cts}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          name="landmark"
-                          id="landmark"
-                          value={data.landmark}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Location" : "स्थान"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          name="location"
-                          id="location"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select location</option>
-                          <option value="MADHAPUR">MADHAPUR</option>
-                          <option value="HITECHCITY">HITECHCITY</option>
-                          <option value="GACHIBOWLI">GACHIBOWLI</option>
-                        </select>
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Area" : "क्षेत्रफळ"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          id="areaUnits"
-                          name="areaUnits"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Area Units(Sqr ft.)</option>
-                          <option value="SQR_FT.">SQR FT.</option>
-                          <option value="SQR_YARD">SQR YARD</option>
-                          <option value="MT_SQR.">MT SQR</option>
-                        </select>
-
-                        <div className="propertyImages">
-                          <input
-                            name="areaOfProperty"
-                            id="areaOfProperty"
-                            value={data.areaOfProperty}
-                            onChange={handleChange}
-                            pattern="[0-9]*[.]?[0-9]*"
-                            title="Please enter a valid numeric value"
-                            placeholder="Area"
-                          />{" "}
-                        </div>
-
-                        <br></br>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <label>
-                            {lang == 0 ? "Address" : "पत्ता"}
-                            <span style={{ color: "red" }}></span>
-                          </label>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                              marginTop: "2px",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine1"
-                              id="addressLine1"
-                              value={data.addressLine1}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine2"
-                              id="addressLine2"
-                              value={data.addressLine2}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="district"
-                              id="district"
-                              value={data.district}
-                              onChange={handleChange}
-                              // placeholder="District"
-                              placeholder={lang == 0 ? "District" : "जिल्हा"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="city"
-                              id="city"
-                              value={data.city}
-                              onChange={handleChange}
-                              // placeholder="City"
-                              placeholder={lang == 0 ? "City" : "शहर"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="pincode"
-                              id="pincode"
-                              value={data.pincode}
-                              onChange={handleChange}
-                              placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
-                              pattern="[0-9]*"
-                              title="Please enter a valid numeric value"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <br></br>
-                      <div className="inputDataIndividualDiv">
-                        {image && (
-                          <div style={{ marginBottom: "18px" }}>
-                            <label style={{ fontSize: "17px" }}>
-                              Property Documents
-                              <span style={{ color: "red" }}></span>
-                            </label>
-
-                            <div
-                              className="viewUploadedDocs"
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                marginTop: "7px",
-                              }}
-                            >
-                              {filesOnly.map((file, index) => (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    width: "60%",
-                                  }}
-                                >
-                                  <div>
-                                    <button
-                                      type="button"
-                                      key={index}
-                                      onClick={() =>
-                                        handleButtonClick(file.file)
-                                      }
-                                      style={{
-                                        width: "100px",
-                                        marginBottom: "10px",
-                                        height: "32px",
-                                        fontSize: "12px",
-                                        fontWeight: "500",
-                                        letterSpacing: "0.4px",
-                                        textTransform: "Capitalize",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "3px",
-                                        background: "rgb(15, 125, 53)",
-                                        fontFamily: "inherit",
-                                        fontWeight: "600",
-                                      }}
-                                    >
-                                      View File
-                                      {/* {index + 1} */}
-                                    </button>{" "}
-                                    &nbsp;
-                                    {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
-                              style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
-                              >
-                                X
-                              </button> */}
-                                    &nbsp;
-                                    <label
-                                      style={{
-                                        fontSize: "14px",
-                                        textTransform: "uppercase",
-                                      }}
-                                    >
-                                      {file.filename}
-                                    </label>
-                                  </div>
-
-                                  <div></div>
-                                </div>
-                              ))}
-
-                              {selectedFileImage && (
-                                <div className="modal-overlay">
-                                  <div className="modal-content">
-                                    <div className="modal-header">
-                                      <button
-                                        className="modal-close"
-                                        onClick={handleModalClose}
-                                        style={{
-                                          background: "gray",
-                                          color: "white",
-                                          borderRadius: "2px",
-                                        }}
-                                      >
-                                        &times;
-                                      </button>
-                                    </div>
-                                    <div className="modal-body">
-                                      <img
-                                        style={{
-                                          maxWidth: "100%",
-                                          maxHeight: "70vh",
-                                        }}
-                                        src={selectedFileImage}
-                                        alt="Selected"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  
-                  </div>
-                </CSSTransition>
-
-                 
-                <div
-                 onClick={handleValidatorPlot}
-                className="basicDiv"
-                  style={{
-                    background: "white",
-                    padding: "20px 20px",
-                    fontWeight: "600",
-                    display: "flex",
-                    justifyContent: "center",
-                  }}
-                >
-                  <div
-                  className="basicDiv1"
-                    style={{
-                      width: "250px",
-                      background: "rgb(83 115 131)",
-                      padding: "6px 20px",
-                      fontWeight: "600",
-                      letterSpacing: "0.7px",
-                      color: "white",
-                      fontSize: "15px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: "3px",
-                      fontSize: "16px",
-                      textAlign: "center",
-                    }}
-                   
-                  >
-                    {lang == 0 ? <span><span style={{fontSize:'18px'}}>V</span><span style={{fontSize: "14px"}} >IEW PLOT</span></span>: "प्लॉट पहा"}
-                    
-                  </div>
-                </div>
-
-                <CSSTransition 
-                in={validatorPlot} nodeRef={nodeRef1}  classNames="alert"
-                  timeout={300} unmountOnExit>
-                    <div ref={nodeRef1} className="validatorPlot">
-                    <div style={{ background: "white", padding: "2% 0 0 4%" }}>
-                      <div className="inputDataIndividualDiv">
-                        <label id="propertyNameLabel">
-                          {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          readOnly
-                          color="inherit"
-                          name="propertyName"
-                          id="propertyName"
-                          value={data.propertyName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0
-                            ? "CTS - Survey Number"
-                            : "सर्वेक्षण क्रमांक"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          color="inherit"
-                          name="cts"
-                          id="cts"
-                          value={data.cts}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          name="landmark"
-                          id="landmark"
-                          value={data.landmark}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Location" : "स्थान"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          name="location"
-                          id="location"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select location</option>
-                          <option value="MADHAPUR">MADHAPUR</option>
-                          <option value="HITECHCITY">HITECHCITY</option>
-                          <option value="GACHIBOWLI">GACHIBOWLI</option>
-                        </select>
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Area" : "क्षेत्रफळ"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          id="areaUnits"
-                          name="areaUnits"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Area Units(Sqr ft.)</option>
-                          <option value="SQR_FT.">SQR FT.</option>
-                          <option value="SQR_YARD">SQR YARD</option>
-                          <option value="MT_SQR.">MT SQR</option>
-                        </select>
-
-                        <div className="propertyImages">
-                          <input
-                            name="areaOfProperty"
-                            id="areaOfProperty"
-                            value={data.areaOfProperty}
-                            onChange={handleChange}
-                            pattern="[0-9]*[.]?[0-9]*"
-                            title="Please enter a valid numeric value"
-                            placeholder="Area"
-                          />{" "}
-                        </div>
-
-                        <br></br>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <label>
-                            {lang == 0 ? "Address" : "पत्ता"}
-                            <span style={{ color: "red" }}></span>
-                          </label>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                              marginTop: "2px",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine1"
-                              id="addressLine1"
-                              value={data.addressLine1}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine2"
-                              id="addressLine2"
-                              value={data.addressLine2}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="district"
-                              id="district"
-                              value={data.district}
-                              onChange={handleChange}
-                              // placeholder="District"
-                              placeholder={lang == 0 ? "District" : "जिल्हा"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="city"
-                              id="city"
-                              value={data.city}
-                              onChange={handleChange}
-                              // placeholder="City"
-                              placeholder={lang == 0 ? "City" : "शहर"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="pincode"
-                              id="pincode"
-                              value={data.pincode}
-                              onChange={handleChange}
-                              placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
-                              pattern="[0-9]*"
-                              title="Please enter a valid numeric value"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <br></br>
-                      <div className="inputDataIndividualDiv">
-                        {image && (
-                          <div style={{ marginBottom: "18px" }}>
-                            <label style={{ fontSize: "17px" }}>
-                              Property Documents
-                              <span style={{ color: "red" }}></span>
-                            </label>
-
-                            <div
-                              className="viewUploadedDocs"
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                marginTop: "7px",
-                              }}
-                            >
-                              {filesOnly.map((file, index) => (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    width: "60%",
-                                  }}
-                                >
-                                  <div>
-                                    <button
-                                      type="button"
-                                      key={index}
-                                      onClick={() =>
-                                        handleButtonClick(file.file)
-                                      }
-                                      style={{
-                                        width: "100px",
-                                        marginBottom: "10px",
-                                        height: "32px",
-                                        fontSize: "12px",
-                                        fontWeight: "500",
-                                        letterSpacing: "0.4px",
-                                        textTransform: "Capitalize",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "3px",
-                                        background: "rgb(15, 125, 53)",
-                                        fontFamily: "inherit",
-                                        fontWeight: "600",
-                                      }}
-                                    >
-                                      View File
-                                      {/* {index + 1} */}
-                                    </button>{" "}
-                                    &nbsp;
-                                    {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
-                              style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
-                              >
-                                X
-                              </button> */}
-                                    &nbsp;
-                                    <label
-                                      style={{
-                                        fontSize: "14px",
-                                        textTransform: "uppercase",
-                                      }}
-                                    >
-                                      {file.filename}
-                                    </label>
-                                  </div>
-
-                                  <div></div>
-                                </div>
-                              ))}
-
-                              {selectedFileImage && (
-                                <div className="modal-overlay">
-                                  <div className="modal-content">
-                                    <div className="modal-header">
-                                      <button
-                                        className="modal-close"
-                                        onClick={handleModalClose}
-                                        style={{
-                                          background: "gray",
-                                          color: "white",
-                                          borderRadius: "2px",
-                                        }}
-                                      >
-                                        &times;
-                                      </button>
-                                    </div>
-                                    <div className="modal-body">
-                                      <img
-                                        style={{
-                                          maxWidth: "100%",
-                                          maxHeight: "70vh",
-                                        }}
-                                        src={selectedFileImage}
-                                        alt="Selected"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                    </div>
-
-                </CSSTransition>
-
-                <div
-                onClick={handleValidatorBuilding}
-                className="basicDiv"
-                  style={{
-                    background: "white",
-                    padding: "20px 20px",
-                    fontWeight: "600",
-                    display: "flex",
-                    justifyContent: "center"
-                  }}
-                >
-                  <div
-                  className="basicDiv1"
-                    style={{
-                      width: "250px",
-                      background: "rgb(83 115 131)",
-                      padding: "6px 20px",
-                      fontWeight: "600",
-                      letterSpacing: "0.7px",
-                      color: "white",
-                      fontSize: "20px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: "3px",
-                      fontSize: "16px",
-                      textAlign: "center",
-                    }}
-                    
-                  >
-                    {lang == 0 ? <span><span style={{fontSize:'18px'}}>V</span><span style={{fontSize: "14px"}} >IEW BUILDING</span></span>: "इमारत पहा"}
-                    
-                  </div>
-                </div>
-
-                <CSSTransition
-                in={validatorBuilding}
-                unmountOnExit timeout={300}
-                classNames="alert" 
-                >
- 
-               
-                    <div style={{ background: "white", padding: "2% 0 0 4%" }}>
-                      <div className="inputDataIndividualDiv">
-                        <label id="propertyNameLabel">
-                          {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          readOnly
-                          color="inherit"
-                          name="propertyName"
-                          id="propertyName"
-                          value={data.propertyName}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0
-                            ? "CTS - Survey Number"
-                            : "सर्वेक्षण क्रमांक"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          color="inherit"
-                          name="cts"
-                          id="cts"
-                          value={data.cts}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <input
-                          name="landmark"
-                          id="landmark"
-                          value={data.landmark}
-                          onChange={handleChange}
-                        />
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Location" : "स्थान"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          name="location"
-                          id="location"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select location</option>
-                          <option value="MADHAPUR">MADHAPUR</option>
-                          <option value="HITECHCITY">HITECHCITY</option>
-                          <option value="GACHIBOWLI">GACHIBOWLI</option>
-                        </select>
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Area" : "क्षेत्रफळ"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          id="areaUnits"
-                          name="areaUnits"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Area Units(Sqr ft.)</option>
-                          <option value="SQR_FT.">SQR FT.</option>
-                          <option value="SQR_YARD">SQR YARD</option>
-                          <option value="MT_SQR.">MT SQR</option>
-                        </select>
-
-                        <div className="propertyImages">
-                          <input
-                            name="areaOfProperty"
-                            id="areaOfProperty"
-                            value={data.areaOfProperty}
-                            onChange={handleChange}
-                            pattern="[0-9]*[.]?[0-9]*"
-                            title="Please enter a valid numeric value"
-                            placeholder="Area"
-                          />{" "}
-                        </div>
-
-                        <br></br>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <label>
-                            {lang == 0 ? "Address" : "पत्ता"}
-                            <span style={{ color: "red" }}></span>
-                          </label>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                              marginTop: "2px",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine1"
-                              id="addressLine1"
-                              value={data.addressLine1}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine2"
-                              id="addressLine2"
-                              value={data.addressLine2}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="district"
-                              id="district"
-                              value={data.district}
-                              onChange={handleChange}
-                              // placeholder="District"
-                              placeholder={lang == 0 ? "District" : "जिल्हा"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="city"
-                              id="city"
-                              value={data.city}
-                              onChange={handleChange}
-                              // placeholder="City"
-                              placeholder={lang == 0 ? "City" : "शहर"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="pincode"
-                              id="pincode"
-                              value={data.pincode}
-                              onChange={handleChange}
-                              placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
-                              pattern="[0-9]*"
-                              title="Please enter a valid numeric value"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <br></br>
-                      <div className="inputDataIndividualDiv">
-                        {image && (
-                          <div style={{ marginBottom: "18px" }}>
-                            <label style={{ fontSize: "17px" }}>
-                              Property Documents
-                              <span style={{ color: "red" }}></span>
-                            </label>
-
-                            <div
-                              className="viewUploadedDocs"
-                              style={{
-                                display: "flex",
-                                flexDirection: "column",
-                                marginTop: "7px",
-                              }}
-                            >
-                              {filesOnly.map((file, index) => (
-                                <div
-                                  style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    width: "60%",
-                                  }}
-                                >
-                                  <div>
-                                    <button
-                                      type="button"
-                                      key={index}
-                                      onClick={() =>
-                                        handleButtonClick(file.file)
-                                      }
-                                      style={{
-                                        width: "100px",
-                                        marginBottom: "10px",
-                                        height: "32px",
-                                        fontSize: "12px",
-                                        fontWeight: "500",
-                                        letterSpacing: "0.4px",
-                                        textTransform: "Capitalize",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "3px",
-                                        background: "rgb(15, 125, 53)",
-                                        fontFamily: "inherit",
-                                        fontWeight: "600",
-                                      }}
-                                    >
-                                      View File
-                                      {/* {index + 1} */}
-                                    </button>{" "}
-                                    &nbsp;
-                                    {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
-                              style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
-                              >
-                                X
-                              </button> */}
-                                    &nbsp;
-                                    <label
-                                      style={{
-                                        fontSize: "14px",
-                                        textTransform: "uppercase",
-                                      }}
-                                    >
-                                      {file.filename}
-                                    </label>
-                                  </div>
-
-                                  <div></div>
-                                </div>
-                              ))}
-
-                              {selectedFileImage && (
-                                <div className="modal-overlay">
-                                  <div className="modal-content">
-                                    <div className="modal-header">
-                                      <button
-                                        className="modal-close"
-                                        onClick={handleModalClose}
-                                        style={{
-                                          background: "gray",
-                                          color: "white",
-                                          borderRadius: "2px",
-                                        }}
-                                      >
-                                        &times;
-                                      </button>
-                                    </div>
-                                    <div className="modal-body">
-                                      <img
-                                        style={{
-                                          maxWidth: "100%",
-                                          maxHeight: "70vh",
-                                        }}
-                                        src={selectedFileImage}
-                                        alt="Selected"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                     
-
-
-                </CSSTransition>
-
-                <div
-                onClick={handleValidatorGround}
-                className="basicDiv"
-                  style={{
-                    background: "white",
-                    padding: "20px 20px",
-                    fontWeight: "600",
-                    display: "flex",
-                    justifyContent: "center"
-                  }}
-                >
-                  <div
-                  className="basicDiv1"
-                    style={{
-                      width: "250px",
-                      background: "rgb(83 115 131)",
-                      padding: "6px 20px",
-                      fontWeight: "600",
-                      letterSpacing: "0.7px",
-                      color: "white",
-                      fontSize: "20px",
-                      display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: "3px",
-                      fontSize: "16px",
-                      textAlign: "center",
-                    }}
-                    
-                  >
-                    {lang == 0 ? <span><span style={{fontSize:'18px'}}>V</span><span style={{fontSize: "14px"}} >IEW GROUND</span></span>: "ग्राउंड पहा"}
-                    
-                  </div>
-                </div>
-
-                <CSSTransition
+              <CSSTransition
                 in={validatorGround}
-                unmountOnExit timeout={300}
-                classNames="alert" 
-                > 
-                    <div style={{ background: "white", padding: "2% 0 0 4%" }}>
-                      <div className="inputDataIndividualDiv">
-                        <label id="propertyNameLabel">
-                          {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
+                unmountOnExit
+                timeout={300}
+                classNames="alert"
+              >
+                <div style={{ background: "white", padding: "2% 0 0 4%" }}>
+                  <div className="inputDataIndividualDiv">
+                    <label id="propertyNameLabel">
+                      {lang == 0 ? "Property name" : "मालमत्तेचे नाव"}
+                      <span style={{ color: "red" }}></span>
+                    </label>
+                    <input
+                      readOnly
+                      color="inherit"
+                      name="propertyName"
+                      id="propertyName"
+                      value={data.propertyName}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <br></br>
+
+                  <div className="inputDataIndividualDiv">
+                    <label>
+                      {lang == 0 ? "CTS - Survey Number" : "सर्वेक्षण क्रमांक"}
+                      <span style={{ color: "red" }}></span>
+                    </label>
+                    <input
+                      color="inherit"
+                      name="cts"
+                      id="cts"
+                      value={data.cts}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <br></br>
+
+                  <div className="inputDataIndividualDiv">
+                    <label>
+                      {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
+                      <span style={{ color: "red" }}></span>
+                    </label>
+                    <input
+                      name="landmark"
+                      id="landmark"
+                      value={data.landmark}
+                      onChange={handleChange}
+                    />
+                  </div>
+                  <br></br>
+
+                  <div className="inputDataIndividualDiv">
+                    <label>
+                      {lang == 0 ? "Location" : "स्थान"}
+                      <span style={{ color: "red" }}></span>
+                    </label>
+                    <select
+                      name="location"
+                      id="location"
+                      style={{
+                        width: "91%",
+                        fontWeight: "400",
+                        color: "#737373",
+                        boxSizing: "border-box",
+                        outline: "none",
+
+                        border: "none",
+                        background: "#e5e5e5",
+                        borderRadius: "3px",
+                        fontFamily: "inherit",
+                        letterSpacing: "0.5px",
+                      }}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select location</option>
+                      <option value="MADHAPUR">MADHAPUR</option>
+                      <option value="HITECHCITY">HITECHCITY</option>
+                      <option value="GACHIBOWLI">GACHIBOWLI</option>
+                    </select>
+                  </div>
+                  <br></br>
+
+                  <div className="inputDataIndividualDiv">
+                    <label>
+                      {lang == 0 ? "Area" : "क्षेत्रफळ"}
+                      <span style={{ color: "red" }}></span>
+                    </label>
+                    <select
+                      id="areaUnits"
+                      name="areaUnits"
+                      style={{
+                        width: "91%",
+                        fontWeight: "400",
+                        color: "#737373",
+                        boxSizing: "border-box",
+                        outline: "none",
+
+                        border: "none",
+                        background: "#e5e5e5",
+                        borderRadius: "3px",
+                        fontFamily: "inherit",
+                        letterSpacing: "0.5px",
+                      }}
+                      onChange={handleChange}
+                    >
+                      <option value="">Select Area Units(Sqr ft.)</option>
+                      <option value="SQR_FT.">SQR FT.</option>
+                      <option value="SQR_YARD">SQR YARD</option>
+                      <option value="MT_SQR.">MT SQR</option>
+                    </select>
+
+                    <div className="propertyImages">
+                      <input
+                        name="areaOfProperty"
+                        id="areaOfProperty"
+                        value={data.areaOfProperty}
+                        onChange={handleChange}
+                        pattern="[0-9]*[.]?[0-9]*"
+                        title="Please enter a valid numeric value"
+                        placeholder="Area"
+                      />{" "}
+                    </div>
+
+                    <br></br>
+
+                    <div
+                      className="inputDataIndividualDiv addre"
+                      style={{ marginBottom: "14px" }}
+                    >
+                      <label>
+                        {lang == 0 ? "Address" : "पत्ता"}
+                        <span style={{ color: "red" }}></span>
+                      </label>
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          alignItems: "center",
+                          marginTop: "2px",
+                        }}
+                      >
                         <input
-                          readOnly
-                          color="inherit"
-                          name="propertyName"
-                          id="propertyName"
-                          value={data.propertyName}
+                          style={{ width: "90%" }}
+                          name="addressLine1"
+                          id="addressLine1"
+                          value={data.addressLine1}
                           onChange={handleChange}
+                          placeholder={
+                            lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
+                          }
                         />
                       </div>
-                      <br></br>
+                    </div>
 
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0
-                            ? "CTS - Survey Number"
-                            : "सर्वेक्षण क्रमांक"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
+                    <div
+                      className="inputDataIndividualDiv addre"
+                      style={{ marginBottom: "14px" }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          alignItems: "center",
+                        }}
+                      >
                         <input
-                          color="inherit"
-                          name="cts"
-                          id="cts"
-                          value={data.cts}
+                          style={{ width: "90%" }}
+                          name="addressLine2"
+                          id="addressLine2"
+                          value={data.addressLine2}
                           onChange={handleChange}
+                          placeholder={
+                            lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
+                          }
                         />
                       </div>
-                      <br></br>
+                    </div>
 
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Landmark" : "महत्त्वाची खूण"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
+                    <div
+                      className="inputDataIndividualDiv addre"
+                      style={{ marginBottom: "14px" }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          alignItems: "center",
+                        }}
+                      >
                         <input
-                          name="landmark"
-                          id="landmark"
-                          value={data.landmark}
+                          style={{ width: "90%" }}
+                          name="district"
+                          id="district"
+                          value={data.district}
                           onChange={handleChange}
+                          // placeholder="District"
+                          placeholder={lang == 0 ? "District" : "जिल्हा"}
                         />
                       </div>
-                      <br></br>
+                    </div>
 
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Location" : "स्थान"}
+                    <div
+                      className="inputDataIndividualDiv addre"
+                      style={{ marginBottom: "14px" }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          alignItems: "center",
+                        }}
+                      >
+                        <input
+                          style={{ width: "90%" }}
+                          name="city"
+                          id="city"
+                          value={data.city}
+                          onChange={handleChange}
+                          // placeholder="City"
+                          placeholder={lang == 0 ? "City" : "शहर"}
+                        />
+                      </div>
+                    </div>
+
+                    <div
+                      className="inputDataIndividualDiv addre"
+                      style={{ marginBottom: "14px" }}
+                    >
+                      <div
+                        style={{
+                          display: "flex",
+                          justifyContent: "space-between",
+                          width: "100%",
+                          alignItems: "center",
+                        }}
+                      >
+                        <input
+                          style={{ width: "90%" }}
+                          name="pincode"
+                          id="pincode"
+                          value={data.pincode}
+                          onChange={handleChange}
+                          placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
+                          pattern="[0-9]*"
+                          title="Please enter a valid numeric value"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <br></br>
+                  <div className="inputDataIndividualDiv">
+                    {image && (
+                      <div style={{ marginBottom: "18px" }}>
+                        <label style={{ fontSize: "17px" }}>
+                          Property Documents
                           <span style={{ color: "red" }}></span>
                         </label>
-                        <select
-                          name="location"
-                          id="location"
+
+                        <div
+                          className="viewUploadedDocs"
                           style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
+                            display: "flex",
+                            flexDirection: "column",
+                            marginTop: "7px",
                           }}
-                          onChange={handleChange}
                         >
-                          <option value="">Select location</option>
-                          <option value="MADHAPUR">MADHAPUR</option>
-                          <option value="HITECHCITY">HITECHCITY</option>
-                          <option value="GACHIBOWLI">GACHIBOWLI</option>
-                        </select>
-                      </div>
-                      <br></br>
-
-                      <div className="inputDataIndividualDiv">
-                        <label>
-                          {lang == 0 ? "Area" : "क्षेत्रफळ"}
-                          <span style={{ color: "red" }}></span>
-                        </label>
-                        <select
-                          id="areaUnits"
-                          name="areaUnits"
-                          style={{
-                            width: "91%",
-                            fontWeight: "400",
-                            color: "#737373",
-                            boxSizing: "border-box",
-                            outline: "none",
-
-                            border: "none",
-                            background: "#e5e5e5",
-                            borderRadius: "3px",
-                            fontFamily: "inherit",
-                            letterSpacing: "0.5px",
-                          }}
-                          onChange={handleChange}
-                        >
-                          <option value="">Select Area Units(Sqr ft.)</option>
-                          <option value="SQR_FT.">SQR FT.</option>
-                          <option value="SQR_YARD">SQR YARD</option>
-                          <option value="MT_SQR.">MT SQR</option>
-                        </select>
-
-                        <div className="propertyImages">
-                          <input
-                            name="areaOfProperty"
-                            id="areaOfProperty"
-                            value={data.areaOfProperty}
-                            onChange={handleChange}
-                            pattern="[0-9]*[.]?[0-9]*"
-                            title="Please enter a valid numeric value"
-                            placeholder="Area"
-                          />{" "}
-                        </div>
-
-                        <br></br>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <label>
-                            {lang == 0 ? "Address" : "पत्ता"}
-                            <span style={{ color: "red" }}></span>
-                          </label>
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                              marginTop: "2px",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine1"
-                              id="addressLine1"
-                              value={data.addressLine1}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 1" : "पत्ता ओळ 1"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="addressLine2"
-                              id="addressLine2"
-                              value={data.addressLine2}
-                              onChange={handleChange}
-                              placeholder={
-                                lang == 0 ? "Address Line 2" : "पत्ता ओळ 2"
-                              }
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="district"
-                              id="district"
-                              value={data.district}
-                              onChange={handleChange}
-                              // placeholder="District"
-                              placeholder={lang == 0 ? "District" : "जिल्हा"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="city"
-                              id="city"
-                              value={data.city}
-                              onChange={handleChange}
-                              // placeholder="City"
-                              placeholder={lang == 0 ? "City" : "शहर"}
-                            />
-                          </div>
-                        </div>
-
-                        <div
-                          className="inputDataIndividualDiv addre"
-                          style={{ marginBottom: "14px" }}
-                        >
-                          <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              width: "100%",
-                              alignItems: "center",
-                            }}
-                          >
-                            <input
-                              style={{ width: "90%" }}
-                              name="pincode"
-                              id="pincode"
-                              value={data.pincode}
-                              onChange={handleChange}
-                              placeholder={lang == 0 ? "Pincode" : "पिन कोड"}
-                              pattern="[0-9]*"
-                              title="Please enter a valid numeric value"
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <br></br>
-                      <div className="inputDataIndividualDiv">
-                        {image && (
-                          <div style={{ marginBottom: "18px" }}>
-                            <label style={{ fontSize: "17px" }}>
-                              Property Documents
-                              <span style={{ color: "red" }}></span>
-                            </label>
-
+                          {filesOnly.map((file, index) => (
                             <div
-                              className="viewUploadedDocs"
                               style={{
                                 display: "flex",
-                                flexDirection: "column",
-                                marginTop: "7px",
+                                justifyContent: "space-between",
+                                width: "60%",
                               }}
                             >
-                              {filesOnly.map((file, index) => (
-                                <div
+                              <div>
+                                <button
+                                  type="button"
+                                  key={index}
+                                  onClick={() => handleButtonClick(file.file)}
                                   style={{
-                                    display: "flex",
-                                    justifyContent: "space-between",
-                                    width: "60%",
+                                    width: "100px",
+                                    marginBottom: "10px",
+                                    height: "32px",
+                                    fontSize: "12px",
+                                    fontWeight: "500",
+                                    letterSpacing: "0.4px",
+                                    textTransform: "Capitalize",
+                                    color: "white",
+                                    border: "none",
+                                    borderRadius: "3px",
+                                    background: "rgb(15, 125, 53)",
+                                    fontFamily: "inherit",
+                                    fontWeight: "600",
                                   }}
                                 >
-                                  <div>
-                                    <button
-                                      type="button"
-                                      key={index}
-                                      onClick={() =>
-                                        handleButtonClick(file.file)
-                                      }
-                                      style={{
-                                        width: "100px",
-                                        marginBottom: "10px",
-                                        height: "32px",
-                                        fontSize: "12px",
-                                        fontWeight: "500",
-                                        letterSpacing: "0.4px",
-                                        textTransform: "Capitalize",
-                                        color: "white",
-                                        border: "none",
-                                        borderRadius: "3px",
-                                        background: "rgb(15, 125, 53)",
-                                        fontFamily: "inherit",
-                                        fontWeight: "600",
-                                      }}
-                                    >
-                                      View File
-                                      {/* {index + 1} */}
-                                    </button>{" "}
-                                    &nbsp;
-                                    {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
+                                  View File
+                                  {/* {index + 1} */}
+                                </button>{" "}
+                                &nbsp;
+                                {/* <button id="delBtn" type="button" key={index} onClick={() => handleDeleteFile(file.fileId)}
                               style={{width:'auto',padding:'0 10px', marginBottom:'10px',height:'32px',fontSize:'14px', fontWeight:'500',letterSpacing:'0.4px', textTransform:'Capitalize',color:"white",border:'none',borderRadius:'3px',background:'rgb(153, 12, 25)',fontFamily:'inherit',fontWeight:'600' }} 
                               >
                                 X
                               </button> */}
-                                    &nbsp;
-                                    <label
-                                      style={{
-                                        fontSize: "14px",
-                                        textTransform: "uppercase",
-                                      }}
-                                    >
-                                      {file.filename}
-                                    </label>
-                                  </div>
+                                &nbsp;
+                                <label
+                                  style={{
+                                    fontSize: "14px",
+                                    textTransform: "uppercase",
+                                  }}
+                                >
+                                  {file.filename}
+                                </label>
+                              </div>
 
-                                  <div></div>
-                                </div>
-                              ))}
-
-                              {selectedFileImage && (
-                                <div className="modal-overlay">
-                                  <div className="modal-content">
-                                    <div className="modal-header">
-                                      <button
-                                        className="modal-close"
-                                        onClick={handleModalClose}
-                                        style={{
-                                          background: "gray",
-                                          color: "white",
-                                          borderRadius: "2px",
-                                        }}
-                                      >
-                                        &times;
-                                      </button>
-                                    </div>
-                                    <div className="modal-body">
-                                      <img
-                                        style={{
-                                          maxWidth: "100%",
-                                          maxHeight: "70vh",
-                                        }}
-                                        src={selectedFileImage}
-                                        alt="Selected"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
+                              <div></div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-                    </div> 
-                </CSSTransition> 
+                          ))}
 
-                <div style={{background:'white'}}>
-                <br></br>
+                          {selectedFileImage && (
+                            <div className="modal-overlay">
+                              <div className="modal-content">
+                                <div className="modal-header">
+                                  <button
+                                    className="modal-close"
+                                    onClick={handleModalClose}
+                                    style={{
+                                      background: "gray",
+                                      color: "white",
+                                      borderRadius: "2px",
+                                    }}
+                                  >
+                                    &times;
+                                  </button>
+                                </div>
+                                <div className="modal-body">
+                                  <img
+                                    style={{
+                                      maxWidth: "100%",
+                                      maxHeight: "70vh",
+                                    }}
+                                    src={selectedFileImage}
+                                    alt="Selected"
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
+              </CSSTransition>
+
+              <div style={{ background: "white" }}>
+                <br></br>
               </div>
             </div>
-           
+          </div>
         </div>
       </div>
     </div>

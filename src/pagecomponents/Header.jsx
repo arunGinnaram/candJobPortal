@@ -10,38 +10,29 @@ import
 { faCoffee, faCheckCircle, 
   faTimesCircle,faDashboard,faChartSimple,
    faBuildingUser,faLandmark,faEnvelope,faBell,faHotel,faCommentDots,faPersonWalkingLuggage,faRightFromBracket,
-   faMagnifyingGlass,faHouseUser
+   faMagnifyingGlass,faHouseUser,faPeopleGroup 
   } from '@fortawesome/free-solid-svg-icons';
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import lang from '../assets/images/translate.png'
 
 import {languageContext } from '../App'
+import urlGlobal from './application.json'
 
-const Header = () => {
+const Header = () => { 
+const url = urlGlobal.urlGlobal;
+const port = urlGlobal.port;
+const contextPath = urlGlobal.ContextPath; 
 
+const userId = sessionStorage.getItem("userId");
+const roleId = sessionStorage.getItem("roleId");
 
-
-  const { lang,setLang } = useContext(languageContext);
-
- 
-  // const [marathi,setMarathi] = useState(1);
- 
-  const handlelanguageChange = (val) => {
-      if(val==='English'){
-        setLang(0);
-      }else if(val==='Marathi'){
-        setLang(1);
-      }else {
-        setLang(0);
-      }
-  }
+  
  
   const navigate = useNavigate();
   const handleLogout = () => {
     sessionStorage.clear();
-    
-
+     
     Swal.fire({
       position: "top-end",
       width: "auto",
@@ -62,7 +53,34 @@ const Header = () => {
         popup: "custom-swal-popup", // Assign a custom class name
       },
     });
-    navigate("/mumbaipolicestation");
+    navigate("/login");
+  }
+
+  const axiosInstance = axios.create();
+
+  const cfg={
+    headers:{
+       "Content-Type":"application/json",
+        Accept:"application/json",
+    }
+  }
+
+  axiosInstance.interceptors.response.use( 
+    (cfg)=>{return cfg;},
+    (err)=>{return Promise.reject(err);}
+  )
+
+   
+
+  const handleSearch = async (e) => {
+    if(e.key=="Enter"){
+      let skill = e.target.value;
+      let skillName = skill?skill.toLowerCase().trim():'';
+      // navigate("/master/InventoryMasterView",{state:{viewData:getData.data.itemDetails,itemHistory:getData.data.itemHistory,imageData:getData.data.imageData}})
+      navigate("/UserProfiles",{state:{skillName:skillName}});
+       
+    }
+    
   }
 
   return (
@@ -109,15 +127,16 @@ const Header = () => {
             fontFamily:'inherit',fontSize:'16px',
             paddingLeft:'6px',borderRadius:'0 3px 3px 0',width:'230px'   }}
           name="search" id="search" placeholder="search"
+          onKeyDown={(e)=>{handleSearch(e)}}
           />
        </div>
 
 
        <div style={{ display:'flex',width:'430px' }}>
            
-          <div
+          {/* <div
           style={{outline:'none',border:'none',
-            // background:'#e9e9e9',
+             
             lineHeight:'35px',color:'rgb(103 103 103)',
             fontFamily:'inherit' ,
              borderRadius:'3px 0 0 3px',
@@ -138,72 +157,48 @@ const Header = () => {
                 /> 
               </div>
           
-              <div style={{fontSize:'13px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
+              <div style={{fontSize:'12px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
               My Home</div>
+          
+          </div>  */}
+
+          <div
+          style={{outline:'none',border:'none',
+            // background:'#e9e9e9',
+            lineHeight:'30px',color:'rgb(103 103 103)',
+            fontFamily:'inherit' ,
+             borderRadius:'3px 0 0 3px',
+             cursor:'pointer',flex:'1',
+             display:'flex',
+             justifyContext:'center' ,
+             flexDirection:'column',
+             alignItems:'center',
+             textAlign:'center'   }}
+            >
+              <div style={{fontSize:'17px',padding:'0',fontWeight:'400' }}>
+                <FontAwesomeIcon
+                  className="editIconHead"
+                  style={{}}
+                  size="lg"
+                  icon={faPeopleGroup}
+                  
+                  
+                /> 
+              </div>
+          
+              <div style={{fontSize:'12px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
+              My Group</div>
           
           </div> 
 
-{/* <FontAwesomeIcon icon={faPersonWalkingLuggage} /> */}
-          {/* <span
-          style={{outline:'none',border:'none',
-            // background:'#e9e9e9',
-            lineHeight:'35px',fontWeight:'600',color:'rgb(103 103 103)',
-            fontFamily:'inherit',fontSize:'16px',
-            padding:'1px 0',borderRadius:'3px 0 0 3px',cursor:'pointer',flex:'1',display:'flex',justifyContext:'flex-end',alignItems:'center',   }}
-            >
-          <FontAwesomeIcon
-            className="editIconHead"
-            style={{}}
-            size="xl"
-            icon={faEnvelope}
-          /></span> */}
            
-           {/* <span
-          style={{outline:'none',border:'none',
-            // background:'#e9e9e9',
-            lineHeight:'35px',fontWeight:'600',color:'rgb(103 103 103)',
-            fontFamily:'inherit',fontSize:'16px',
-            padding:'1px 0',borderRadius:'3px 0 0 3px',cursor:'pointer',flex:'1',display:'flex',justifyContext:'flex-end',alignItems:'center',   }}
-            >
-          <FontAwesomeIcon
-            className="editIconHead"
-            style={{}}
-            size="xl"
-            icon={faCommentDots}
-          /></span> */}
 
-        {/* <span
-          style={{outline:'none',border:'none',
-            // background:'#e9e9e9',
-            lineHeight:'35px',fontWeight:'600',color:'rgb(103 103 103)',
-            fontFamily:'inherit',fontSize:'16px',
-            padding:'1px 0',borderRadius:'3px 0 0 3px',cursor:'pointer',flex:'1',display:'flex',justifyContext:'flex-end',alignItems:'center',   }}
-            >
-          <FontAwesomeIcon
-            className="editIconHead"
-            style={{}}
-            size="xl"
-            icon={faPersonWalkingLuggage}
-          /></span>  */}
-
-        {/* <span
-          style={{outline:'none',border:'none',
-            // background:'#e9e9e9',
-            lineHeight:'35px',fontWeight:'600',color:'rgb(103 103 103)',
-            fontFamily:'inherit',fontSize:'16px',
-            padding:'1px 0',borderRadius:'3px 0 0 3px',cursor:'pointer',flex:'1',display:'flex',justifyContext:'flex-end',alignItems:'center',   }}
-            > 
-          <FontAwesomeIcon
-            className="editIconHead"
-            style={{}}
-            size="xl"
-            icon={faRightFromBracket}
-          /></span> */}
+ 
 
 <div
           style={{outline:'none',border:'none',
             // background:'#e9e9e9',
-            lineHeight:'35px',color:'rgb(103 103 103)',
+            lineHeight:'30px',color:'rgb(103 103 103)',
             fontFamily:'inherit' ,
              borderRadius:'3px 0 0 3px',
              cursor:'pointer',flex:'1',
@@ -223,7 +218,7 @@ const Header = () => {
                 /> 
               </div>
           
-              <div style={{fontSize:'13px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
+              <div style={{fontSize:'12px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
               Message</div>
           
           </div>
@@ -231,7 +226,7 @@ const Header = () => {
           <div
           style={{outline:'none',border:'none',
             // background:'#e9e9e9',
-            lineHeight:'35px',color:'rgb(103 103 103)',
+            lineHeight:'30px',color:'rgb(103 103 103)',
             fontFamily:'inherit' ,
              borderRadius:'3px 0 0 3px',
              cursor:'pointer',flex:'1',
@@ -251,7 +246,7 @@ const Header = () => {
                 /> 
               </div>
           
-              <div style={{fontSize:'13px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
+              <div style={{fontSize:'12px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
               Notifications</div>
           
           </div>
@@ -259,7 +254,7 @@ const Header = () => {
           <div
           style={{outline:'none',border:'none',
             // background:'#e9e9e9',
-            lineHeight:'35px',color:'rgb(103 103 103)',
+            lineHeight:'30px',color:'rgb(103 103 103)',
             fontFamily:'inherit' ,
              borderRadius:'3px 0 0 3px',
              cursor:'pointer',flex:'1',
@@ -279,7 +274,7 @@ const Header = () => {
                 /> 
               </div>
           
-              <div style={{fontSize:'13px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
+              <div style={{fontSize:'12px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
               Get Work</div>
           
           </div>
@@ -287,7 +282,7 @@ const Header = () => {
           <div
           style={{outline:'none',border:'none',
             // background:'#e9e9e9',
-            lineHeight:'35px',color:'rgb(103 103 103)',
+            lineHeight:'30px',color:'rgb(103 103 103)',
             fontFamily:'inherit' ,
              borderRadius:'3px 0 0 3px',
              cursor:'pointer',flex:'1',
@@ -307,7 +302,7 @@ const Header = () => {
                 /> 
               </div>
           
-              <div style={{fontSize:'13px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
+              <div style={{fontSize:'12px',padding:'0',fontWeight:'400',lineHeight:'14px', }}>
               Sign out</div>
           
           </div>

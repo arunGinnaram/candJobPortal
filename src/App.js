@@ -7,12 +7,13 @@ import "./App.css";
 import Registration from "./pagecomponents/Registration";
 import Login from "./pagecomponents/Login";
 import UserHome from "./pagecomponents/UserHome";
-import UserMainPage from "./pagecomponents/UserMainPage";
+import UserMainPage from "./pagecomponents/UserMainPage"; 
+import UserProfiles from "./pagecomponents/UserProfiles";      
 import CandidateEducationEdit from "./pagecomponents/CandidateEducationEdit";
 // import Punishments from "./pagecomponents/Punishments";
 // import Suspension from "./pagecomponents/Suspension";
 
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 // import Awardsmedals from './pagecomponents/Awardsmedals'
 // import Viewdata from "./pagecomponents/Viewdata";
 
@@ -33,6 +34,7 @@ import  Header  from './pagecomponents/Header'
 import About from "./pagecomponents/About";
 
 import React, { useState } from 'react';
+import People from "./pagecomponents/People";
 // import {SidenavBgOnClick} from './pagecomponents/Context'
 
 
@@ -65,16 +67,15 @@ function App() {
            
             {/* <Route path="/dig" element={<Login name="dig"/>}  > </Route>  */}
 
-            <Route path="/" element={<About />} />
-            <Route path="/login" element={<Login />} />
+            {/* <Route path="/" element={<About />} /> */}
+            <Route path="/" element={<Login />} />
             <Route path="/Registration" element={<Registration />} />
             <Route path="/UserHome" element={<UserHome />} />
-            <Route path="/UserMainPage" element={<UserMainPage />} />            
+            <Route path="/UserMainPage" element={<UserMainPage />} />       
+            <Route path="/UserProfiles" element={<UserProfiles />} />    
+            <Route path="/People" element ={<People/>}/>      
+            {/* <Route path="/MyGroup"/>  */}
             <Route path="/CandidateEducationEdit" element={<CandidateEducationEdit />} />
-             
-          
-
-          
         </Routes>
       </Router>
       {/* </Sidenav.Provider> */}

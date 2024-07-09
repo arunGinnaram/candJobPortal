@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef, useContext } from "react";
 import Sidevavbar from "./Sidevavbar";
 import "./Login.css";
-import "./Properties.css"; 
+import "./Properties.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCoffee,
@@ -20,7 +20,7 @@ import {
   faDownload,
   faUpDown,
   faBuildingCircleCheck,
-  faCircleArrowLeft 
+  faCircleArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -99,7 +99,7 @@ const Properties = () => {
       return cfg;
     },
     (err) => {
-      console.error("Axios Err" + err);
+      console.error(err);
       return Promise.reject(err);
     }
   );
@@ -133,16 +133,14 @@ const Properties = () => {
     // });
 
     // if(confirmResult.isConfirmed){
-      navigate("/mumbaipolicestation/Propertyview", { state: pId });
+    navigate("/mumbaipolicestation/Propertyview", { state: pId });
 
     // }
   };
 
-
-  const validateProperty =  (pId) => {
-    
+  const validateProperty = (pId) => {
     navigate("/mumbaipolicestation/Propertydatavalidation", { state: pId });
-  }
+  };
 
   const editProperty = async (pId) => {
     const confirmResult = await Swal.fire({
@@ -699,7 +697,6 @@ const Properties = () => {
               )}
             </div>
 
-            
             {/* <div>
             <input  value="CREATE PROPERTY" style={{ fontWeight:'600',color:'white',background:'#E50000',border:'none',borderRadius:'3px',padding:'6px 10px',fontFamily:'inherit',letterSpacing:'0.5px' }} type="button"    />
               <input type="text" style={{height:'25px'}}  />
@@ -822,7 +819,9 @@ const Properties = () => {
                   {lang == 0 ? "building" : "इमारत"}
                 </option>
                 <option value="ground">{lang == 0 ? "ground" : "जमीन"}</option>
-                <option value="noProperty">{lang == 0 ? "noProperty" : "मालमत्ता नाही"}</option>
+                <option value="noProperty">
+                  {lang == 0 ? "noProperty" : "मालमत्ता नाही"}
+                </option>
               </select>
               &nbsp;
               {/* <select
@@ -862,10 +861,10 @@ const Properties = () => {
                 style={{
                   fontWeight: "600",
                   color: "white",
-                  fontSize:'15px',
+                  fontSize: "15px",
                   // background: "#E50000",
                   background: "rgb(3, 44, 83)",
-                  background:'rgb(141, 125, 112)',
+                  background: "rgb(141, 125, 112)",
                   border: "none",
                   borderRadius: "3px",
                   padding: "6px 9px",
@@ -969,7 +968,6 @@ const Properties = () => {
                     fontFamily: "inherit",
                     // paddingLeft:'10px',
                     letterSpacing: "0.6px",
-
                   }}
                 >
                   {lang == 0 ? "Properties list" : "गुणधर्मांची यादी"}
@@ -1367,7 +1365,12 @@ const Properties = () => {
 
                           <td
                             className="actionDatatd"
-                            style={{ width: "11%", textAlign: "center",paddingLeft:'0px',paddingRight:'0px' }}
+                            style={{
+                              width: "11%",
+                              textAlign: "center",
+                              paddingLeft: "0px",
+                              paddingRight: "0px",
+                            }}
                           >
                             <FontAwesomeIcon
                               title="View"
@@ -1378,7 +1381,7 @@ const Properties = () => {
                               color="rgb(3, 44, 83)"
                               size="lg"
                             />
-                            
+
                             <FontAwesomeIcon
                               title="Edit"
                               onClick={() => editProperty(data.propertyId)}
@@ -1388,7 +1391,7 @@ const Properties = () => {
                               color="#66c229"
                               size="lg"
                             />
-                             
+
                             <FontAwesomeIcon
                               title="Delete"
                               onClick={() => deleteProperty(data.propertyId)}
@@ -1398,7 +1401,7 @@ const Properties = () => {
                               color="#ab0707"
                               size="lg"
                             />
-                              
+
                             <FontAwesomeIcon
                               title="validation"
                               onClick={() => validateProperty(data.propertyId)}
@@ -1408,7 +1411,6 @@ const Properties = () => {
                               color="rgb(219 164 0)"
                               size="lg"
                             />
-                             
                           </td>
                         </tr>
                       ))}
